@@ -10,7 +10,7 @@
   <style>
     * { font-family: 'Inter', sans-serif; }
     code, .mono { font-family: 'JetBrains Mono', monospace; }
-    html, body { overflow-x: hidden; }
+    html, body { max-width: 100%; overflow-x: hidden; }
 
     .gradient-bg {
       background: linear-gradient(160deg, #0a0a14 0%, #10082a 45%, #080e1c 100%);
@@ -39,6 +39,8 @@
       border: 1px solid rgba(255,255,255,0.06);
       border-radius: 10px;
       overflow-x: auto;
+      word-break: break-all;
+      overflow-wrap: break-word;
     }
     /* En mode découverte, on cache les code-box et les grilles de détails */
     .tip-box {
