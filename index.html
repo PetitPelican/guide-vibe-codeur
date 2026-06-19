@@ -10,6 +10,7 @@
   <style>
     * { font-family: 'Inter', sans-serif; }
     code, .mono { font-family: 'JetBrains Mono', monospace; }
+    html, body { overflow-x: hidden; }
 
     .gradient-bg {
       background: linear-gradient(160deg, #0a0a14 0%, #10082a 45%, #080e1c 100%);
@@ -37,6 +38,7 @@
       background: rgba(0,0,0,0.4);
       border: 1px solid rgba(255,255,255,0.06);
       border-radius: 10px;
+      overflow-x: auto;
     }
     /* En mode découverte, on cache les code-box et les grilles de détails */
     .tip-box {
@@ -1095,7 +1097,7 @@
               <span class="text-purple-300 font-semibold">💡 L'analogie :</span> il y a deux types d'emails professionnels. Les emails <em>marketing</em> (newsletters) — pour ça, tu utiliserais Mailchimp. Et les emails <em>transactionnels</em> déclenchés automatiquement par une action utilisateur — c'est pour ça que Resend existe.
             </p>
           </div>
-          <div class="grid grid-cols-2 gap-1.5 mb-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 mb-4">
             <div class="flex items-center gap-1.5 text-xs text-slate-400 bg-white/[0.02] rounded-lg p-2 border border-white/5"><span class="text-rose-400 shrink-0">📧</span> Bienvenue après inscription</div>
             <div class="flex items-center gap-1.5 text-xs text-slate-400 bg-white/[0.02] rounded-lg p-2 border border-white/5"><span class="text-rose-400 shrink-0">📧</span> Confirmation de paiement</div>
             <div class="flex items-center gap-1.5 text-xs text-slate-400 bg-white/[0.02] rounded-lg p-2 border border-white/5"><span class="text-rose-400 shrink-0">📧</span> Abonnement bientôt expiré</div>
