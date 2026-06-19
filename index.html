@@ -1,0 +1,1986 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guide du Vibe Codeur</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * { font-family: 'Inter', sans-serif; }
+    code, .mono { font-family: 'JetBrains Mono', monospace; }
+
+    .gradient-bg {
+      background: linear-gradient(160deg, #0a0a14 0%, #10082a 45%, #080e1c 100%);
+    }
+    .hero-glow {
+      background: radial-gradient(ellipse 90% 50% at 50% -5%, rgba(139,92,246,0.2) 0%, transparent 65%);
+    }
+    .card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      transition: border-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    }
+    .card:hover {
+      border-color: rgba(139,92,246,0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 40px rgba(139,92,246,0.1);
+    }
+    .analogy-box {
+      background: rgba(139,92,246,0.07);
+      border: 1px solid rgba(139,92,246,0.2);
+      border-radius: 12px;
+    }
+    .code-box {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+    }
+    /* En mode découverte, on cache les code-box et les grilles de détails */
+    .tip-box {
+      background: rgba(34,197,94,0.06);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 12px;
+    }
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+    }
+    .badge {
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+    }
+    .tag {
+      font-size: 0.68rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .pulse-dot { animation: pulseDot 2s infinite; }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    .step-connector {
+      position: relative;
+    }
+    .step-connector:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 19px;
+      top: 44px;
+      height: calc(100% + 24px);
+      width: 2px;
+      background: linear-gradient(to bottom, rgba(139,92,246,0.4), rgba(139,92,246,0.05));
+    }
+    .highlight {
+      background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(59,130,246,0.1));
+      border: 1px solid rgba(139,92,246,0.2);
+      border-radius: 12px;
+    }
+    .emoji-icon {
+      font-size: 1.4rem;
+      line-height: 1;
+    }
+    .badge-start   { background: rgba(34,197,94,0.12); color: #86efac; border: 1px solid rgba(34,197,94,0.25); }
+    .badge-inter   { background: rgba(251,146,60,0.12); color: #fdba74; border: 1px solid rgba(251,146,60,0.25); }
+    .badge-prod    { background: rgba(239,68,68,0.10);  color: #fca5a5; border: 1px solid rgba(239,68,68,0.2); }
+    .maturity-badge { font-size: 0.6rem; letter-spacing: 0.08em; font-family: 'JetBrains Mono', monospace; border-radius: 6px; padding: 2px 7px; font-weight: 600; text-transform: uppercase; }
+
+    /* Accordéon */
+    .accordion-body { overflow: hidden; transition: max-height 0.35s ease, opacity 0.3s ease; max-height: 9999px; opacity: 1; }
+    #side-nav { opacity: 0; transition: opacity 0.4s ease; }
+    .side-nav-item { text-decoration: none; }
+    .side-nav-item .side-nav-dot { background: #334155; }
+    .side-nav-item .side-nav-text { color: #64748b; }
+    .side-nav-item:hover .side-nav-text { color: #94a3b8; }
+    .side-nav-item:hover .side-nav-dot { background: #6366f1; }
+    .side-nav-item.active { background: rgba(139,92,246,0.08); }
+    .side-nav-item.active .side-nav-dot { background: #a78bfa; width: 6px; height: 6px; }
+    .side-nav-item.active .side-nav-text { color: #e2e8f0; font-weight: 600; }
+    .accordion-body.collapsed { max-height: 0; opacity: 0; }
+    .accordion-toggle { cursor: pointer; user-select: none; }
+    .accordion-toggle .chevron { transition: transform 0.3s ease; display: inline-block; }
+    .accordion-toggle.collapsed .chevron { transform: rotate(-90deg); }
+
+    /* Modes de lecture */
+  </style>
+</head>
+<body class="gradient-bg min-h-screen text-white">
+
+  <div class="hero-glow fixed inset-0 pointer-events-none"></div>
+
+  <div class="relative max-w-4xl mx-auto px-5 py-16">
+
+    <!-- ══════════════════════════════════════════
+         HERO
+    ══════════════════════════════════════════ -->
+
+    <!-- SOMMAIRE FLOTTANT -->
+    <nav id="side-nav" class="fixed right-5 top-1/2 -translate-y-1/2 z-50 hidden xl:block w-52">
+      <div class="bg-slate-950/80 backdrop-blur-md border border-white/10 rounded-2xl p-3 shadow-xl">
+        <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 px-2">Sommaire</p>
+        <div class="flex flex-col gap-0.5">
+
+          <a href="#nav-demarrer" class="side-nav-item flex items-center gap-2.5 px-2 py-1.5 rounded-lg transition-colors duration-150 no-underline" data-target="nav-demarrer">
+            <span class="side-nav-dot w-1.5 h-1.5 rounded-full shrink-0 transition-all duration-200"></span>
+            <span class="side-nav-text text-xs leading-tight">Par où commencer</span>
+          </a>
+
+          <a href="#nav-vscode" class="side-nav-item flex items-center gap-2.5 px-2 py-1.5 rounded-lg transition-colors duration-150 no-underline" data-target="nav-vscode">
+            <span class="side-nav-dot w-1.5 h-1.5 rounded-full shrink-0 transition-all duration-200"></span>
+            <span class="side-nav-text text-xs leading-tight">VS Code + Claude Code</span>
+          </a>
+
+          <a href="#nav-github" class="side-nav-item flex items-center gap-2.5 px-2 py-1.5 rounded-lg transition-colors duration-150 no-underline" data-target="nav-github">
+            <span class="side-nav-dot w-1.5 h-1.5 rounded-full shrink-0 transition-all duration-200"></span>
+            <span class="side-nav-text text-xs leading-tight">GitHub</span>
+          </a>
+
+          <a href="#nav-frontend" class="side-nav-item flex items-center gap-2.5 px-2 py-1.5 rounded-lg transition-colors duration-150 no-underline" data-target="nav-frontend">
+            <span class="side-nav-dot w-1.5 h-1.5 rounded-full shrink-0 transition-all duration-200"></span>
+            <span class="side-nav-text text-xs leading-tight">Vercel + Next.js</span>
+          </a>
+
+          <a href="#nav-backend" class="side-nav-item flex items-center gap-2.5 px-2 py-1.5 rounded-lg transition-colors duration-150 no-underline" data-target="nav-backend">
+            <span class="side-nav-dot w-1.5 h-1.5 rounded-full shrink-0 transition-all duration-200"></span>
+            <span class="side-nav-text text-xs leading-tight">Supabase + Clerk</span>
+          </a>
+
+          <a href="#nav-stripe" class="side-nav-item flex items-center gap-2.5 px-2 py-1.5 rounded-lg transition-colors duration-150 no-underline" data-target="nav-stripe">
+            <span class="side-nav-dot w-1.5 h-1.5 rounded-full shrink-0 transition-all duration-200"></span>
+            <span class="side-nav-text text-xs leading-tight">Stripe</span>
+          </a>
+
+          <a href="#nav-services" class="side-nav-item flex items-center gap-2.5 px-2 py-1.5 rounded-lg transition-colors duration-150 no-underline" data-target="nav-services">
+            <span class="side-nav-dot w-1.5 h-1.5 rounded-full shrink-0 transition-all duration-200"></span>
+            <span class="side-nav-text text-xs leading-tight">Services</span>
+          </a>
+
+          <a href="#nav-recap" class="side-nav-item flex items-center gap-2.5 px-2 py-1.5 rounded-lg transition-colors duration-150 no-underline" data-target="nav-recap">
+            <span class="side-nav-dot w-1.5 h-1.5 rounded-full shrink-0 transition-all duration-200"></span>
+            <span class="side-nav-text text-xs leading-tight">Récapitulatif</span>
+          </a>
+
+          <div class="my-1 border-t border-white/8"></div>
+
+          <a href="#nav-pratiques" class="side-nav-item flex items-center gap-2.5 px-2 py-1.5 rounded-lg transition-colors duration-150 no-underline" data-target="nav-pratiques">
+            <span class="side-nav-dot w-1.5 h-1.5 rounded-full shrink-0 transition-all duration-200"></span>
+            <span class="side-nav-text text-xs leading-tight">Bonnes pratiques</span>
+          </a>
+
+          <a href="#nav-securite" class="side-nav-item flex items-center gap-2.5 px-2 py-1.5 rounded-lg transition-colors duration-150 no-underline" data-target="nav-securite">
+            <span class="side-nav-dot w-1.5 h-1.5 rounded-full shrink-0 transition-all duration-200"></span>
+            <span class="side-nav-text text-xs leading-tight">Sécurité</span>
+          </a>
+
+        </div>
+      </div>
+    </nav>
+
+    <header class="text-center mb-24">
+      <div class="inline-flex items-center gap-2 bg-purple-500/10 border border-purple-500/20 rounded-full px-4 py-1.5 mb-7">
+        <span class="pulse-dot w-1.5 h-1.5 rounded-full bg-purple-400 inline-block"></span>
+        <span class="badge text-purple-300 uppercase tracking-widest font-medium">Pour ceux qui n'ont pas fait d'informatique</span>
+      </div>
+
+      <h1 class="text-5xl md:text-7xl font-black mb-5 leading-tight tracking-tight">
+        Guide du
+        <span class="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent block">
+          Vibe Codeur
+        </span>
+      </h1>
+
+      <p class="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed mb-6">
+        Tu as une idée d'app. Tu n'as jamais codé. Ce guide te montre les outils pour la construire quand même — et pourquoi ils vont ensemble.
+      </p>
+
+      <div class="inline-block highlight px-6 py-4 max-w-xl mx-auto mb-6">
+        <p class="text-sm text-slate-300 leading-relaxed">
+          <span class="text-purple-300 font-semibold">Le vibe coding</span>, c'est l'idée que tu peux construire des produits numériques en décrivant ce que tu veux en langage naturel, et laisser l'intelligence artificielle écrire le code à ta place — pendant que toi, tu restes concentré sur l'idée et le produit.
+        </p>
+      </div>
+
+      <p class="text-sm text-slate-500 max-w-lg mx-auto leading-relaxed mb-8">
+        En 2026, 95% des startups YC construisent avec de l'IA. Ce guide t'explique chaque outil — simplement, honnêtement — pour que tu puisses faire pareil.
+      </p>
+
+    </header>
+
+    <!-- ══════════════════════════════════════════
+         PAR OÙ COMMENCER
+    ══════════════════════════════════════════ -->
+    <section id="nav-demarrer" class="mb-20">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="section-label text-green-400 uppercase font-semibold tracking-widest">Par où commencer</span>
+        <div class="flex-1 h-px bg-gradient-to-r from-green-500/30 to-transparent"></div>
+      </div>
+      <h2 class="text-3xl font-bold mb-2">Ton premier projet en 5 étapes</h2>
+      <p class="text-slate-500 mb-8">Avant de plonger dans les détails de chaque outil, voici la séquence concrète pour démarrer. Le reste du guide est la référence que tu consulteras en cours de route.</p>
+
+      <div class="card p-7">
+        <div class="space-y-0">
+
+          <div class="step-connector flex items-start gap-5 pb-6">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shrink-0 font-bold text-white shadow-lg shadow-blue-500/20">1</div>
+            <div class="pt-1">
+              <div class="flex flex-wrap items-center gap-2 mb-1">
+                <p class="font-semibold text-white">Installer ton espace de travail</p>
+                <span class="text-xs bg-blue-500/15 text-blue-300 border border-blue-500/20 rounded-md px-2 py-0.5 font-mono">Partie 1</span>
+              </div>
+              <p class="text-sm text-slate-400 leading-relaxed">Télécharge <strong class="text-white">VS Code</strong> sur code.visualstudio.com. Installe l'extension <strong class="text-white">Claude Code</strong> depuis le marketplace. Connecte-toi avec ton compte Claude Pro (20€/mois). Ton environnement de travail est prêt.</p>
+            </div>
+          </div>
+
+          <div class="step-connector flex items-start gap-5 pb-6">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center shrink-0 font-bold text-white shadow-lg shadow-purple-500/20">2</div>
+            <div class="pt-1">
+              <div class="flex flex-wrap items-center gap-2 mb-1">
+                <p class="font-semibold text-white">Créer ton dépôt GitHub et configurer Claude</p>
+                <span class="text-xs bg-purple-500/15 text-purple-300 border border-purple-500/20 rounded-md px-2 py-0.5 font-mono">Partie 2</span>
+              </div>
+              <p class="text-sm text-slate-400 leading-relaxed">Crée un compte sur <strong class="text-white">github.com</strong>. Clone le template <strong class="text-white">claude-starter</strong> dans ton projet, recharge VS Code, puis lance <code class="text-xs text-orange-300 bg-black/30 rounded px-1.5 py-0.5">/agent-init</code> — il te pose 5 questions et configure Claude Code pour ton projet spécifiquement.</p>
+            </div>
+          </div>
+
+          <div class="step-connector flex items-start gap-5 pb-6">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-teal-500 flex items-center justify-center shrink-0 font-bold text-white shadow-lg shadow-green-500/20">3</div>
+            <div class="pt-1">
+              <div class="flex flex-wrap items-center gap-2 mb-1">
+                <p class="font-semibold text-white">Générer et déployer ton interface</p>
+                <span class="text-xs bg-green-500/15 text-green-300 border border-green-500/20 rounded-md px-2 py-0.5 font-mono">Partie 3</span>
+              </div>
+              <p class="text-sm text-slate-400 leading-relaxed">Utilise <strong class="text-white">v0.dev</strong> pour générer ton interface en décrivant ce que tu veux. Copie le code dans VS Code. Crée un compte <strong class="text-white">Vercel</strong> et connecte-le à ton repo GitHub — ton app est en ligne à chaque push.</p>
+            </div>
+          </div>
+
+          <div class="step-connector flex items-start gap-5 pb-6">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center shrink-0 font-bold text-white shadow-lg shadow-orange-500/20">4</div>
+            <div class="pt-1">
+              <div class="flex flex-wrap items-center gap-2 mb-1">
+                <p class="font-semibold text-white">Brancher ta base de données et l'authentification</p>
+                <span class="text-xs bg-orange-500/15 text-orange-300 border border-orange-500/20 rounded-md px-2 py-0.5 font-mono">Partie 4</span>
+              </div>
+              <p class="text-sm text-slate-400 leading-relaxed">Crée un projet <strong class="text-white">Supabase</strong> (ta base de données). Installe <strong class="text-white">Clerk</strong> pour gérer les connexions utilisateurs. Donne les clés API à Claude Code — il connecte tout automatiquement.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-5">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-purple-500 flex items-center justify-center shrink-0 font-bold text-white shadow-lg shadow-pink-500/20">5</div>
+            <div class="pt-1">
+              <div class="flex flex-wrap items-center gap-2 mb-1">
+                <p class="font-semibold text-white">Monétiser et monitorer</p>
+                <span class="text-xs bg-pink-500/15 text-pink-300 border border-pink-500/20 rounded-md px-2 py-0.5 font-mono">Parties 5 & 6</span>
+              </div>
+              <p class="text-sm text-slate-400 leading-relaxed">Ajoute <strong class="text-white">Stripe</strong> pour les paiements. Installe <strong class="text-white">Sentry</strong> pour être alerté si quelque chose casse, et <strong class="text-white">PostHog</strong> pour comprendre comment tes utilisateurs utilisent l'app. Les autres services (Resend, Upstash) s'ajoutent selon tes besoins.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mt-6 pt-6 border-t border-white/6">
+          <p class="text-xs text-slate-500 leading-relaxed text-center">💡 <strong class="text-slate-400">Les parties ci-dessous détaillent chaque outil.</strong> Tu n'as pas besoin de tout lire d'un coup — consulte la section dont tu as besoin au moment où tu en as besoin.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         SECTION 1 — LES OUTILS DU QUOTIDIEN
+    ══════════════════════════════════════════ -->
+    <section id="nav-vscode" class="mb-20">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="section-label text-purple-400 uppercase font-semibold tracking-widest">Partie 1</span>
+        <div class="flex-1 h-px bg-gradient-to-r from-purple-500/30 to-transparent"></div>
+      </div>
+      <h2 class="text-3xl font-bold mb-2">Ton espace de travail</h2>
+      <p class="text-slate-500 mb-10">Avant d'écrire une seule ligne, tu as besoin de deux choses : un endroit pour écrire du code, et un assistant IA pour t'aider à le faire.</p>
+
+      <!-- VS Code -->
+      <div class="card p-7 mb-5">
+        <div class="flex items-start gap-5 mb-5">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center shrink-0 shadow-lg">
+            <svg viewBox="0 0 24 24" class="w-8 h-8 fill-white"><path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.261A1 1 0 0 0 .326 8.74L3.899 12 .326 15.26a1 1 0 0 0 .001 1.479L1.65 17.94a.999.999 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.492 1.492 0 0 0 1.704.29l4.942-2.377A1.5 1.5 0 0 0 24 20.06V3.939a1.5 1.5 0 0 0-.85-1.352zm-5.146 14.861L10.826 12l7.178-5.448v10.896z"/></svg>
+          </div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2 mb-1">
+              <h3 class="text-2xl font-bold">VS Code</h3>
+              <span class="tag bg-blue-500/15 text-blue-300 border border-blue-500/20 rounded-md px-2 py-0.5">L'éditeur de code</span>
+              <span class="maturity-badge badge-start">Démarrage</span>
+              <span class="tag bg-slate-700/40 text-slate-400 border border-slate-600/20 rounded-md px-2 py-0.5">Gratuit</span>
+            </div>
+            <p class="text-slate-500 text-sm">Développé par Microsoft · Utilisé par ~70% des développeurs mondiaux</p>
+          </div>
+        </div>
+
+        <div class="analogy-box p-4 mb-5">
+          <p class="text-sm text-slate-300 leading-relaxed">
+            <span class="text-purple-300 font-semibold">💡 L'analogie simple :</span> imagine VS Code comme Microsoft Word, mais pour le code. Word t'aide à écrire du texte avec une mise en forme, de la correction orthographique, et une structure claire. VS Code fait pareil pour le code — il colore les mots-clés, détecte les erreurs, et organise tes fichiers dans un panneau à gauche.
+          </p>
+        </div>
+
+        <div class="space-y-4 mb-5 detail-block">
+          <h4 class="text-sm font-semibold text-slate-300 uppercase tracking-wide">Ce que tu verras dans VS Code :</h4>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div class="bg-white/[0.02] border border-white/6 rounded-xl p-3">
+              <p class="text-sm font-medium text-blue-300 mb-1">📁 L'explorateur de fichiers</p>
+              <p class="text-xs text-slate-400 leading-relaxed">Sur la gauche, la liste de tous tes fichiers — comme un dossier sur ton bureau, mais pour ton projet entier.</p>
+            </div>
+            <div class="bg-white/[0.02] border border-white/6 rounded-xl p-3">
+              <p class="text-sm font-medium text-blue-300 mb-1">✏️ L'éditeur principal</p>
+              <p class="text-xs text-slate-400 leading-relaxed">Au centre, c'est là que tu lis et modifies le code. Le code est coloré automatiquement pour être plus lisible.</p>
+            </div>
+            <div class="bg-white/[0.02] border border-white/6 rounded-xl p-3">
+              <p class="text-sm font-medium text-blue-300 mb-1">🖥️ Le terminal intégré</p>
+              <p class="text-xs text-slate-400 leading-relaxed">En bas, une zone de texte noir où tu tapes des commandes pour lancer ton app, installer des outils, etc. C'est là que tu utilises Claude Code.</p>
+            </div>
+            <div class="bg-white/[0.02] border border-white/6 rounded-xl p-3">
+              <p class="text-sm font-medium text-blue-300 mb-1">🔌 Les extensions</p>
+              <p class="text-xs text-slate-400 leading-relaxed">Des plugins à installer pour ajouter des fonctionnalités : support de nouvelles langues, thèmes visuels, intégrations IA.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Extension Claude Code -->
+        <div class="bg-gradient-to-br from-orange-950/40 to-purple-950/30 border border-orange-500/25 rounded-xl p-5 mb-5">
+          <h4 class="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-md bg-orange-500/20 border border-orange-500/30 flex items-center justify-center text-xs font-black text-orange-300">C</span>
+            L'extension Claude Code — l'outil clé à installer
+          </h4>
+          <p class="text-xs text-slate-400 leading-relaxed mb-4">
+            Une fois VS Code installé, la première chose à faire est d'installer l'extension <strong class="text-white">Claude Code</strong> depuis le marketplace d'extensions de VS Code. C'est elle qui fait le lien entre ton éditeur et l'intelligence artificielle Claude d'Anthropic.
+          </p>
+          <div class="grid sm:grid-cols-2 gap-3 mb-4">
+            <div class="bg-black/30 border border-white/6 rounded-xl p-3">
+              <p class="text-xs font-semibold text-orange-300 mb-1.5">💬 Le panneau de chat à droite</p>
+              <p class="text-xs text-slate-400 leading-relaxed">Une fois l'extension installée, une icône "C" apparaît dans la barre latérale gauche. Clique dessus et un panneau de conversation s'ouvre sur la droite de VS Code — exactement comme WhatsApp ou iMessage, mais tu parles avec Claude. Tu peux lui poser des questions sur ton code, lui demander de modifier un fichier, ou lui expliquer ce que tu veux construire.</p>
+            </div>
+            <div class="bg-black/30 border border-white/6 rounded-xl p-3">
+              <p class="text-xs font-semibold text-orange-300 mb-1.5">🖥️ Le terminal intégré</p>
+              <p class="text-xs text-slate-400 leading-relaxed">En parallèle du chat, tu peux aussi lancer Claude Code directement dans le terminal en bas de VS Code en tapant <code class="text-green-300 bg-black/30 rounded px-1">claude</code>. Dans ce mode, Claude a encore plus de contrôle : il peut lire tous tes fichiers, en créer, modifier, exécuter des commandes — de façon plus autonome que le simple chat.</p>
+            </div>
+          </div>
+          <div class="bg-black/20 border border-white/5 rounded-xl p-3">
+            <p class="text-xs text-slate-500 mb-2 font-medium">Comment installer l'extension :</p>
+            <div class="space-y-1.5 text-xs text-slate-400">
+              <div class="flex items-center gap-2"><span class="text-blue-400 shrink-0 font-bold">1.</span> Ouvre VS Code</div>
+              <div class="flex items-center gap-2"><span class="text-blue-400 shrink-0 font-bold">2.</span> Clique sur l'icône Extensions dans la barre gauche (ou appuie sur <code class="bg-white/10 rounded px-1">⌘⇧X</code>)</div>
+              <div class="flex items-center gap-2"><span class="text-blue-400 shrink-0 font-bold">3.</span> Recherche <span class="text-white font-medium">"Claude Code"</span> et installe l'extension officielle d'Anthropic</div>
+              <div class="flex items-center gap-2"><span class="text-blue-400 shrink-0 font-bold">4.</span> Connecte-toi avec ton compte Claude — le panneau de chat est prêt</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tip-box p-4">
+          <p class="text-sm text-green-300 font-semibold mb-1">✅ Pour démarrer</p>
+          <p class="text-xs text-slate-400 leading-relaxed">Télécharge VS Code gratuitement sur <span class="text-blue-400">code.visualstudio.com</span>. Installe l'extension "Claude Code" depuis le marketplace. C'est tout ce qu'il te faut pour commencer à vibe coder.</p>
+        </div>
+      </div>
+
+      <!-- Claude Code -->
+      <div class="card p-7">
+        <div class="flex items-start gap-5 mb-5">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-500 to-pink-600 flex items-center justify-center shrink-0 shadow-lg text-2xl font-black">C</div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2 mb-1">
+              <h3 class="text-2xl font-bold">Claude Code</h3>
+              <span class="tag bg-orange-500/15 text-orange-300 border border-orange-500/20 rounded-md px-2 py-0.5">L'assistant IA</span>
+              <span class="tag bg-slate-700/40 text-slate-400 border border-slate-600/20 rounded-md px-2 py-0.5">par Anthropic</span>
+              <span class="tag bg-amber-500/15 text-amber-300 border border-amber-500/25 rounded-md px-2 py-0.5">20 €/mois</span>
+              <span class="maturity-badge badge-start">Démarrage</span>
+            </div>
+            <p class="text-slate-500 text-sm">L'IA qui comprend ton projet entier et code à ta place</p>
+          </div>
+        </div>
+
+        <div class="analogy-box p-4 mb-5">
+          <p class="text-sm text-slate-300 leading-relaxed">
+            <span class="text-purple-300 font-semibold">💡 L'analogie simple :</span> imagine un développeur expert qui lit l'intégralité de ton projet, comprend son architecture, et répond à tes questions ou écrit du code pour toi — en quelques secondes. La différence avec ChatGPT ? Claude Code <em>vit dans ton projet</em>. Il accède directement à tes fichiers, les modifie, lance des commandes. Il ne se contente pas de te donner du code à copier-coller.
+          </p>
+        </div>
+
+        <div class="space-y-4 mb-5 detail-block">
+          <h4 class="text-sm font-semibold text-slate-300 uppercase tracking-wide">Ce que tu peux lui demander :</h4>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div class="bg-white/[0.02] border border-white/6 rounded-xl p-3">
+              <p class="text-xs text-slate-500 mb-1.5 font-medium uppercase tracking-wide">Créer des features</p>
+              <p class="text-xs text-orange-200 italic">"Crée une page de connexion avec email et mot de passe"</p>
+            </div>
+            <div class="bg-white/[0.02] border border-white/6 rounded-xl p-3">
+              <p class="text-xs text-slate-500 mb-1.5 font-medium uppercase tracking-wide">Corriger des bugs</p>
+              <p class="text-xs text-orange-200 italic">"Mon bouton ne fonctionne pas, trouve pourquoi"</p>
+            </div>
+            <div class="bg-white/[0.02] border border-white/6 rounded-xl p-3">
+              <p class="text-xs text-slate-500 mb-1.5 font-medium uppercase tracking-wide">Expliquer du code</p>
+              <p class="text-xs text-orange-200 italic">"Explique-moi ce que fait ce fichier"</p>
+            </div>
+            <div class="bg-white/[0.02] border border-white/6 rounded-xl p-3">
+              <p class="text-xs text-slate-500 mb-1.5 font-medium uppercase tracking-wide">Connecter des services</p>
+              <p class="text-xs text-orange-200 italic">"Intègre Stripe pour que les users puissent payer"</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-5">
+          <h4 class="text-sm font-semibold text-slate-300 uppercase tracking-wide mb-3">Comment ça marche concrètement :</h4>
+          <div class="code-box p-4 space-y-2">
+            <p class="text-xs text-slate-500 mb-3">Tu ouvres le terminal dans VS Code et tu tapes :</p>
+            <div class="flex items-start gap-3">
+              <span class="text-slate-600 text-xs mt-0.5 shrink-0">$</span>
+              <code class="text-sm text-green-300">claude</code>
+            </div>
+            <p class="text-xs text-slate-500 ml-5">→ Claude Code se lance dans le terminal</p>
+            <div class="flex items-start gap-3 mt-3">
+              <span class="text-orange-400 text-xs mt-0.5 shrink-0">❯</span>
+              <code class="text-sm text-orange-200 italic">"Ajoute un système d'abonnement mensuel avec Stripe"</code>
+            </div>
+            <p class="text-xs text-slate-500 ml-5">→ Il lit ton projet, écrit les fichiers nécessaires, et te montre ce qu'il a fait</p>
+          </div>
+        </div>
+
+        <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4 mb-5">
+          <h4 class="text-sm font-semibold text-slate-300 mb-3">Les commandes les plus utiles :</h4>
+          <div class="space-y-2">
+            <div class="flex items-center gap-3 text-xs">
+              <code class="text-orange-300 bg-black/30 rounded px-2 py-1 shrink-0 w-20 text-center">/review</code>
+              <span class="text-slate-400">Claude relit tout ce que tu viens d'écrire et donne son avis critique</span>
+            </div>
+            <div class="flex items-center gap-3 text-xs">
+              <code class="text-orange-300 bg-black/30 rounded px-2 py-1 shrink-0 w-20 text-center">/plan</code>
+              <span class="text-slate-400">Avant de coder, il réfléchit et te montre son plan d'action — tu valides avant qu'il commence</span>
+            </div>
+            <div class="flex items-center gap-3 text-xs">
+              <code class="text-orange-300 bg-black/30 rounded px-2 py-1 shrink-0 w-20 text-center">/help</code>
+              <span class="text-slate-400">Liste toutes les commandes disponibles</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-amber-950/20 border border-amber-500/25 rounded-xl p-4 mb-4">
+          <p class="text-sm font-semibold text-amber-300 mb-2">💰 Abonnement Claude — 20 €/mois</p>
+          <p class="text-xs text-slate-400 leading-relaxed mb-2">Claude Code nécessite un abonnement <strong class="text-white">Claude Pro</strong> à 20 €/mois (ou Claude Max à partir de 100 €/mois pour un usage intensif). Cet abonnement te donne accès à Claude dans VS Code (panneau de chat), dans le terminal via la commande <code class="text-green-300 bg-black/30 rounded px-1">claude</code>, et sur le site claude.ai.</p>
+          <div class="grid sm:grid-cols-2 gap-2 text-xs">
+            <div class="flex items-start gap-2 text-slate-400"><span class="text-amber-400 shrink-0">→</span> <span><strong class="text-white">Claude Pro à 20 €/mois</strong> — idéal pour démarrer, largement suffisant pour la plupart des projets</span></div>
+            <div class="flex items-start gap-2 text-slate-400"><span class="text-amber-400 shrink-0">→</span> <span><strong class="text-white">Claude Max à partir de 100 €/mois</strong> — pour les projets intensifs ou en équipe</span></div>
+          </div>
+        </div>
+
+        <div class="tip-box p-4">
+          <p class="text-sm text-green-300 font-semibold mb-1">✅ Le secret du vibe coding</p>
+          <p class="text-xs text-slate-400 leading-relaxed">Plus tu décris précisément ce que tu veux (le contexte, l'objectif, les contraintes), meilleur sera le résultat. Traite Claude Code comme un collègue très compétent à qui tu délègues une tâche — pas comme une machine à qui tu donnes des instructions techniques.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         SECTION 2 — GITHUB
+    ══════════════════════════════════════════ -->
+    <section id="nav-github" class="mb-20">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="section-label text-purple-400 uppercase font-semibold tracking-widest">Partie 2</span>
+        <div class="flex-1 h-px bg-gradient-to-r from-purple-500/30 to-transparent"></div>
+      </div>
+      <h2 class="text-3xl font-bold mb-2">Sauvegarder et versionner ton projet</h2>
+      <p class="text-slate-500 mb-10">Avant de coder sérieusement, il te faut un filet de sécurité. Git et GitHub te permettent de ne jamais perdre ton travail — et de revenir en arrière si quelque chose se casse.</p>
+
+      <!-- Git vs GitHub -->
+      <div class="card p-7 mb-5">
+        <div class="flex items-start gap-5 mb-5">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-600 to-red-700 flex items-center justify-center shrink-0 text-3xl">🌿</div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2 mb-1">
+              <h3 class="text-2xl font-bold">Git &amp; GitHub</h3>
+              <span class="tag bg-orange-500/15 text-orange-300 border border-orange-500/20 rounded-md px-2 py-0.5">Versioning</span>
+              <span class="maturity-badge badge-start">Démarrage</span>
+              <span class="tag bg-slate-700/40 text-slate-400 border border-slate-600/20 rounded-md px-2 py-0.5">Gratuit</span>
+            </div>
+            <p class="text-slate-500 text-sm">Ton historique de projet, ta sauvegarde, et ta collaboration — tout en un</p>
+          </div>
+        </div>
+
+        <div class="analogy-box p-4 mb-6">
+          <p class="text-sm text-slate-300 leading-relaxed mb-3">
+            <span class="text-purple-300 font-semibold">💡 L'analogie simple — Git vs GitHub :</span>
+          </p>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div class="bg-black/20 rounded-xl p-3">
+              <p class="text-sm font-bold text-orange-300 mb-1">Git = le journal de bord</p>
+              <p class="text-xs text-slate-400 leading-relaxed">Git est un outil installé sur ton ordinateur. Il enregistre l'historique complet de chaque modification de ton projet — comme un journal de bord où chaque entrée décrit ce qui a changé, quand, et pourquoi. Si tu casses quelque chose, tu peux revenir à n'importe quelle entrée passée.</p>
+            </div>
+            <div class="bg-black/20 rounded-xl p-3">
+              <p class="text-sm font-bold text-white mb-1">GitHub = le coffre-fort en ligne</p>
+              <p class="text-xs text-slate-400 leading-relaxed">GitHub est un site web qui stocke une copie de ton journal de bord dans le cloud. Si ton ordinateur tombe en panne, ton projet est sauf. C'est aussi là que tu partages ton code avec d'autres, ou que Vercel va chercher ton projet pour le déployer.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Les actions expliquées -->
+        <h4 class="text-sm font-semibold text-slate-300 uppercase tracking-wide mb-4">Les actions essentielles — expliquées simplement</h4>
+
+        <div class="space-y-3 mb-6">
+
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4">
+            <div class="flex items-start gap-4">
+              <div class="bg-green-500/15 border border-green-500/20 rounded-lg px-3 py-1.5 shrink-0">
+                <code class="text-sm font-bold text-green-300">commit</code>
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-white mb-1">Prendre un instantané de ton travail</p>
+                <p class="text-xs text-slate-400 leading-relaxed mb-2">Un commit, c'est comme prendre une photo de ton projet à un instant T. Tu accompagnes chaque commit d'un message qui décrit ce que tu as fait. Git garde toutes ces photos dans l'ordre chronologique — tu peux revenir à n'importe laquelle.</p>
+                <div class="code-box px-3 py-2">
+                  <code class="text-xs text-green-300">git commit -m "Ajout de la page de connexion"</code>
+                </div>
+                <p class="text-xs text-slate-600 mt-1.5 italic">→ Conseil : commit souvent, avec des messages clairs. Chaque fonctionnalité terminée = un commit.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4">
+            <div class="flex items-start gap-4">
+              <div class="bg-blue-500/15 border border-blue-500/20 rounded-lg px-3 py-1.5 shrink-0">
+                <code class="text-sm font-bold text-blue-300">push</code>
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-white mb-1">Envoyer ton travail sur GitHub</p>
+                <p class="text-xs text-slate-400 leading-relaxed mb-2">Le push envoie tous tes commits locaux (sur ton ordinateur) vers GitHub (dans le cloud). C'est l'équivalent de "sauvegarder sur Google Drive". Sans push, tes commits n'existent que sur ta machine. Vercel déclenche aussi un nouveau déploiement à chaque push.</p>
+                <div class="code-box px-3 py-2">
+                  <code class="text-xs text-blue-300">git push</code>
+                </div>
+                <p class="text-xs text-slate-600 mt-1.5 italic">→ Bonne habitude : push en fin de session de travail, au minimum.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4">
+            <div class="flex items-start gap-4">
+              <div class="bg-cyan-500/15 border border-cyan-500/20 rounded-lg px-3 py-1.5 shrink-0">
+                <code class="text-sm font-bold text-cyan-300">pull</code>
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-white mb-1">Récupérer les dernières modifications</p>
+                <p class="text-xs text-slate-400 leading-relaxed mb-2">Si tu travailles depuis deux ordinateurs, ou que quelqu'un d'autre a contribué au projet, le pull récupère les changements depuis GitHub et les intègre à ta version locale. C'est l'inverse du push.</p>
+                <div class="code-box px-3 py-2">
+                  <code class="text-xs text-cyan-300">git pull</code>
+                </div>
+                <p class="text-xs text-slate-600 mt-1.5 italic">→ Toujours faire un pull avant de commencer à travailler si plusieurs personnes codent sur le projet.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4">
+            <div class="flex items-start gap-4">
+              <div class="bg-slate-600/40 border border-slate-500/20 rounded-lg px-3 py-1.5 shrink-0">
+                <code class="text-sm font-bold text-slate-300">fetch</code>
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-white mb-1">Regarder sans toucher</p>
+                <p class="text-xs text-slate-400 leading-relaxed mb-2">Le fetch télécharge les informations depuis GitHub pour voir ce qui a changé — mais sans les appliquer à ton projet local. C'est comme regarder les nouvelles dans un journal avant de décider si tu veux les lire en détail. Moins utilisé que pull, mais utile pour vérifier l'état du dépôt à distance.</p>
+                <div class="code-box px-3 py-2">
+                  <code class="text-xs text-slate-300">git fetch</code>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4">
+            <div class="flex items-start gap-4">
+              <div class="bg-violet-500/15 border border-violet-500/20 rounded-lg px-3 py-1.5 shrink-0">
+                <code class="text-sm font-bold text-violet-300">branch</code>
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-white mb-1">Travailler sur une copie parallèle</p>
+                <p class="text-xs text-slate-400 leading-relaxed mb-2">Une branche, c'est une copie de ton projet sur laquelle tu peux expérimenter sans risque. Imagine que ton projet est un document Word — une branche, c'est comme faire un "Enregistrer sous" pour tester une idée folle. Si ça marche, tu fusionnes la branche avec la version principale. Si ça échoue, tu supprimes la branche, et ton projet principal est intact.</p>
+                <div class="code-box px-3 py-2 space-y-1">
+                  <div><code class="text-xs text-violet-300">git checkout -b nouvelle-feature</code> <span class="text-slate-600 text-xs">← créer une branche</span></div>
+                  <div><code class="text-xs text-violet-300">git checkout main</code> <span class="text-slate-600 text-xs">← revenir à la version principale</span></div>
+                </div>
+                <p class="text-xs text-slate-600 mt-1.5 italic">→ La branche principale s'appelle "main". C'est ta version de production — celle que Vercel déploie.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4">
+            <div class="flex items-start gap-4">
+              <div class="bg-pink-500/15 border border-pink-500/20 rounded-lg px-3 py-1.5 shrink-0">
+                <code class="text-sm font-bold text-pink-300">clone</code>
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-white mb-1">Télécharger un projet depuis GitHub</p>
+                <p class="text-xs text-slate-400 leading-relaxed mb-2">Le clone copie un projet entier depuis GitHub vers ton ordinateur — historique complet inclus. C'est ce que tu fais quand tu veux travailler sur un projet existant depuis un nouvel ordinateur, ou quand tu utilises un template trouvé en ligne.</p>
+                <div class="code-box px-3 py-2">
+                  <code class="text-xs text-pink-300">git clone https://github.com/ton-compte/ton-projet</code>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Workflow du vibe codeur -->
+        <div class="bg-white/[0.02] border border-white/6 rounded-xl p-5 mb-5">
+          <h4 class="text-sm font-semibold text-white mb-4">Le workflow Git du vibe codeur au quotidien</h4>
+          <div class="space-y-2">
+            <div class="flex items-center gap-3 text-xs">
+              <span class="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-slate-400 shrink-0 font-bold">1</span>
+              <span class="text-slate-400">Tu codes une feature avec Claude Code</span>
+            </div>
+            <div class="flex items-center gap-3 text-xs text-slate-600 ml-4">↓</div>
+            <div class="flex items-center gap-3 text-xs">
+              <span class="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 shrink-0 font-bold">2</span>
+              <span class="text-slate-400">Tu fais un <code class="text-green-300 bg-black/30 rounded px-1">commit</code> avec un message descriptif</span>
+            </div>
+            <div class="flex items-center gap-3 text-xs text-slate-600 ml-4">↓</div>
+            <div class="flex items-center gap-3 text-xs">
+              <span class="w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 shrink-0 font-bold">3</span>
+              <span class="text-slate-400">Tu fais un <code class="text-blue-300 bg-black/30 rounded px-1">push</code> pour envoyer sur GitHub</span>
+            </div>
+            <div class="flex items-center gap-3 text-xs text-slate-600 ml-4">↓</div>
+            <div class="flex items-center gap-3 text-xs">
+              <span class="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-slate-300 shrink-0 font-bold">4</span>
+              <span class="text-slate-400">Vercel détecte le push et déploie automatiquement ✓</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Note VS Code -->
+        <div class="highlight p-4 mb-5">
+          <p class="text-sm font-semibold text-purple-300 mb-2">💡 Bonne nouvelle : tu n'as pas besoin de taper ces commandes à la main</p>
+          <p class="text-xs text-slate-400 leading-relaxed">VS Code intègre une interface graphique Git (l'icône "Source Control" dans la barre latérale). Tu vois les fichiers modifiés, tu écris ton message de commit, et tu cliques sur un bouton pour commit et push — sans jamais toucher au terminal. Claude Code peut aussi gérer Git entièrement à ta place si tu le lui demandes.</p>
+        </div>
+
+        <div class="tip-box p-4">
+          <p class="text-sm text-green-300 font-semibold mb-1">✅ Pour démarrer</p>
+          <p class="text-xs text-slate-400 leading-relaxed">Crée un compte gratuit sur <span class="text-blue-400">github.com</span>. Ensuite, crée un nouveau "repository" (dépôt) — c'est le nom d'un projet sur GitHub. Connecte-le à VS Code, et dès ton premier commit/push, ton projet est sauvegardé dans le cloud. GitHub Desktop (application gratuite) simplifie encore plus l'interface si le terminal t'intimide.</p>
+        </div>
+      </div>
+
+      <!-- claude-starter -->
+      <div class="card p-7" style="border-color: rgba(139,92,246,0.3); background: linear-gradient(135deg, rgba(139,92,246,0.05), rgba(59,130,246,0.03));">
+        <div class="flex items-start gap-5 mb-5">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center shrink-0 shadow-lg text-2xl">🚀</div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2 mb-1">
+              <h3 class="text-2xl font-bold">claude-starter</h3>
+              <span class="tag bg-purple-500/20 text-purple-300 border border-purple-500/30 rounded-md px-2 py-0.5">Template GitHub</span>
+              <span class="tag bg-green-500/15 text-green-300 border border-green-500/20 rounded-md px-2 py-0.5">Gratuit & open source</span>
+            </div>
+            <p class="text-slate-400 text-sm">Le template Claude Code prêt à l'emploi pour démarrer n'importe quel projet en 2 minutes</p>
+            <a href="https://github.com/PetitPelican/claude-starter" class="inline-flex items-center gap-1.5 text-xs text-purple-400 hover:text-purple-300 mt-1 transition-colors">
+              <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 fill-current"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              github.com/PetitPelican/claude-starter
+            </a>
+          </div>
+        </div>
+
+        <div class="analogy-box p-4 mb-5">
+          <p class="text-sm text-slate-300 leading-relaxed">
+            <span class="text-purple-300 font-semibold">💡 C'est quoi concrètement ?</span> Quand tu crées un nouveau projet, Claude Code part de zéro — il ne sait pas comment tu travailles, quels sont tes choix techniques, ni l'état d'avancement de ton projet. Ce template règle ça en 2 minutes : tu le clones, tu lances une commande, et Claude Code est configuré précisément pour <em>ton</em> projet grâce à un agent qui te pose 5 questions et génère tout automatiquement.
+          </p>
+        </div>
+
+        <!-- Étapes -->
+        <h4 class="text-sm font-semibold text-slate-300 uppercase tracking-wide mb-3">Démarrer en 4 étapes</h4>
+        <div class="space-y-3 mb-5">
+          <div class="flex items-start gap-3">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 border border-purple-500/30 flex items-center justify-center text-xs font-bold text-purple-300 shrink-0 mt-0.5">1</span>
+            <div>
+              <p class="text-sm font-medium text-white mb-1">Cloner le repo dans ton projet</p>
+              <div class="code-box px-3 py-2">
+                <code class="text-xs text-green-300">git clone https://github.com/PetitPelican/claude-starter.git .</code>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 border border-purple-500/30 flex items-center justify-center text-xs font-bold text-purple-300 shrink-0 mt-0.5">2</span>
+            <div>
+              <p class="text-sm font-medium text-white mb-1">Recharger VS Code</p>
+              <p class="text-xs text-slate-400">Appuie sur <code class="text-xs bg-white/10 rounded px-1.5 py-0.5">Shift + Ctrl + P</code> → <span class="text-white font-medium">Developer: Reload Window</span>. Sans ça, la commande <code class="text-xs bg-white/10 rounded px-1.5 py-0.5">/agent-init</code> n'apparaît pas dans Claude Code.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 border border-purple-500/30 flex items-center justify-center text-xs font-bold text-purple-300 shrink-0 mt-0.5">3</span>
+            <div>
+              <p class="text-sm font-medium text-white mb-1">Lancer l'agent d'initialisation</p>
+              <div class="code-box px-3 py-2 mb-2">
+                <code class="text-xs text-orange-300">/agent-init</code>
+              </div>
+              <p class="text-xs text-slate-400">L'agent te pose 5 questions sur ton projet et configure automatiquement :</p>
+              <div class="grid sm:grid-cols-2 gap-1.5 mt-2">
+                <div class="flex items-center gap-1.5 text-xs text-slate-400"><span class="text-purple-400">✓</span> Un fichier <code class="bg-white/10 rounded px-1">CLAUDE.md</code> personnalisé</div>
+                <div class="flex items-center gap-1.5 text-xs text-slate-400"><span class="text-purple-400">✓</span> Des agents adaptés à ton type de projet</div>
+                <div class="flex items-center gap-1.5 text-xs text-slate-400"><span class="text-purple-400">✓</span> Des fichiers mémoire pré-remplis</div>
+                <div class="flex items-center gap-1.5 text-xs text-slate-400"><span class="text-purple-400">✓</span> Des skills prêts à l'emploi</div>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-6 h-6 rounded-full bg-green-500/20 border border-green-500/30 flex items-center justify-center text-xs font-bold text-green-300 shrink-0 mt-0.5">4</span>
+            <div>
+              <p class="text-sm font-medium text-white mb-1">Coder 🎉</p>
+              <p class="text-xs text-slate-400">C'est tout. Lance <code class="text-xs bg-white/10 rounded px-1.5 py-0.5">/memory-update</code> en fin de session pour que Claude Code garde une mémoire à jour de ton projet.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ce qui est inclus -->
+        <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4 mb-5">
+          <h4 class="text-sm font-semibold text-white mb-3">Ce qui est inclus dans le template</h4>
+          <div class="grid sm:grid-cols-3 gap-3">
+            <div>
+              <p class="text-xs font-semibold text-purple-300 mb-1.5">🤖 Agents spécialisés</p>
+              <div class="space-y-1 text-xs text-slate-400">
+                <div>Frontend, backend, mobile, auth</div>
+                <div>Paiements, base de données</div>
+                <div>API, qualité, audit</div>
+              </div>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-blue-300 mb-1.5">⚡ Skills</p>
+              <div class="space-y-1 text-xs text-slate-400">
+                <div><code class="bg-white/10 rounded px-1">/caveman</code> — mode ultra-compressé</div>
+                <div><code class="bg-white/10 rounded px-1">/memory-update</code> — mise à jour mémoire</div>
+              </div>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-green-300 mb-1.5">🧠 Mémoire projet</p>
+              <div class="space-y-1 text-xs text-slate-400">
+                <div>État d'avancement</div>
+                <div>Décisions d'architecture</div>
+                <div>Modèle de données, règles métier</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projet existant -->
+        <div class="bg-blue-950/20 border border-blue-500/15 rounded-xl p-4 mb-5">
+          <p class="text-sm font-semibold text-blue-300 mb-2">📁 Tu as déjà un projet existant ?</p>
+          <p class="text-xs text-slate-400 leading-relaxed mb-2">Ne clone pas dans le répertoire racine — copie uniquement le dossier <code class="bg-white/10 rounded px-1">.claude/</code> dans ton projet :</p>
+          <div class="code-box p-2.5 space-y-1">
+            <code class="text-xs text-green-300 block">git clone https://github.com/PetitPelican/claude-starter.git /tmp/claude-starter</code>
+            <code class="text-xs text-green-300 block">cp -r /tmp/claude-starter/.claude ./</code>
+          </div>
+          <p class="text-xs text-slate-500 mt-2">→ Recharge VS Code, lance <code class="text-xs bg-white/10 rounded px-1">/agent-init</code> — il détecte que le projet existe et ne touche pas à tes fichiers.</p>
+        </div>
+
+        <div class="tip-box p-4">
+          <p class="text-sm text-green-300 font-semibold mb-1">✅ Pourquoi utiliser ce template ?</p>
+          <p class="text-xs text-slate-400 leading-relaxed">Sans configuration, Claude Code répond de façon générique. Avec ce template, il connaît ton projet, ton stack, tes conventions, et l'état d'avancement de chaque feature. Résultat : des réponses bien plus précises et pertinentes dès la première question.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         SECTION 3 — FRONTEND
+    ══════════════════════════════════════════ -->
+    <section id="nav-frontend" class="mb-20">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="section-label text-blue-400 uppercase font-semibold tracking-widest">Partie 3</span>
+        <div class="flex-1 h-px bg-gradient-to-r from-blue-500/30 to-transparent"></div>
+      </div>
+      <h2 class="text-3xl font-bold mb-2">Ce que l'utilisateur voit</h2>
+      <p class="text-slate-500 mb-10">Le "frontend", c'est la partie visible de ton application — les pages, les boutons, les couleurs. C'est ce que tes utilisateurs touchent et regardent.</p>
+
+      <!-- Vercel -->
+      <div class="card p-7 mb-5">
+        <div class="flex items-start gap-5 mb-5">
+          <div class="w-14 h-14 rounded-2xl bg-black border border-white/20 flex items-center justify-center shrink-0">
+            <svg viewBox="0 0 24 24" class="w-8 h-8 fill-white"><path d="M24 22.525H0l12-21.05 12 21.05z"/></svg>
+          </div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2 mb-1">
+              <h3 class="text-2xl font-bold">Vercel</h3>
+              <span class="tag bg-slate-700/40 text-slate-300 border border-slate-600/20 rounded-md px-2 py-0.5">Hébergement & Déploiement</span>
+              <span class="tag bg-slate-700/40 text-slate-400 border border-slate-600/20 rounded-md px-2 py-0.5">Gratuit</span>
+              <span class="maturity-badge badge-start">Démarrage</span>
+            </div>
+            <p class="text-slate-500 text-sm">Ton code sur GitHub → visible sur internet en 30 secondes</p>
+          </div>
+        </div>
+
+        <div class="analogy-box p-4 mb-5">
+          <p class="text-sm text-slate-300 leading-relaxed">
+            <span class="text-purple-300 font-semibold">💡 L'analogie simple :</span> ton app Next.js, c'est comme un livre que tu viens d'écrire — il existe sur ton ordinateur, mais personne d'autre ne peut le lire. Vercel, c'est l'imprimeur et le distributeur en un. Dès que tu envoies une nouvelle version via GitHub, Vercel l'imprime et la distribue dans le monde entier en 30 secondes. C'est ce qui fait passer ton projet de "ça marche chez moi" à "n'importe qui dans le monde peut y accéder via une URL".
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4 mb-5">
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4">
+            <h4 class="text-sm font-semibold text-white mb-2">🔄 Déploiement automatique</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">Tu connectes ton repo GitHub à Vercel une seule fois. Ensuite, à chaque <code class="text-xs bg-white/10 rounded px-1">git push</code>, Vercel reconstruit et redéploie ton app automatiquement. Zéro manipulation manuelle — c'est toujours la dernière version qui est en ligne.</p>
+          </div>
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4">
+            <h4 class="text-sm font-semibold text-white mb-2">🔗 Preview URLs</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">Chaque branche Git génère une URL unique de prévisualisation. Tu peux partager un lien vers une version "en cours de test" à quelqu'un pour avoir un retour, avant de la rendre officielle sur l'URL principale.</p>
+          </div>
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4">
+            <h4 class="text-sm font-semibold text-white mb-2">🌍 CDN mondial</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">Vercel ne stocke pas ton app sur un seul serveur. Il la distribue depuis des dizaines de points dans le monde. Résultat : un utilisateur en Australie charge ton site depuis un serveur australien — aussi rapide que s'il était local.</p>
+          </div>
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4">
+            <h4 class="text-sm font-semibold text-white mb-2">🔧 Variables d'environnement</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">Tes clés API secrètes (Stripe, Supabase, Clerk…) sont stockées en sécurité dans le dashboard Vercel — jamais dans ton code, jamais sur GitHub. Vercel les injecte au moment du déploiement.</p>
+          </div>
+        </div>
+
+        <div class="bg-violet-950/30 border border-violet-500/25 rounded-xl p-5 mb-4">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="bg-violet-500/20 border border-violet-500/30 rounded-full px-2.5 py-0.5 text-xs font-bold text-violet-300">✦ Inclus avec Vercel</span>
+            <div class="flex items-center gap-2">
+              <div class="w-6 h-6 rounded-md bg-gradient-to-br from-violet-500 to-pink-500 flex items-center justify-center text-xs font-black text-white shrink-0">v0</div>
+              <p class="text-sm font-semibold text-white">v0.dev — le générateur d'interface</p>
+            </div>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed mb-4">Vercel a créé <strong class="text-white">v0.dev</strong>, un outil gratuit qui génère des interfaces visuelles à partir d'une simple description en français. Tu décris ce que tu veux, il produit du code Next.js + Tailwind prêt à coller dans ton projet. C'est l'équivalent de Canva, mais au lieu d'images, il produit du vrai code fonctionnel.</p>
+          <div class="mb-4">
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">Exemples de prompts :</p>
+            <div class="space-y-2">
+              <div class="code-box p-2.5">
+                <p class="text-xs text-slate-500 mb-1">Dashboard :</p>
+                <p class="text-xs text-violet-200 italic">"Un dashboard avec une sidebar de navigation, un en-tête avec l'avatar utilisateur, et 4 cartes de statistiques en haut"</p>
+              </div>
+              <div class="code-box p-2.5">
+                <p class="text-xs text-slate-500 mb-1">Page de pricing :</p>
+                <p class="text-xs text-violet-200 italic">"Une page de tarification avec 3 plans (gratuit, pro, entreprise) et des boutons d'action"</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-black/20 border border-white/5 rounded-xl p-3">
+            <p class="text-xs font-semibold text-slate-400 mb-2">Workflow :</p>
+            <div class="flex flex-wrap items-center gap-2 text-xs">
+              <span class="bg-white/5 rounded-lg px-2.5 py-1 text-white font-medium">1. Ouvrir v0.dev</span>
+              <span class="text-slate-600">→</span>
+              <span class="bg-white/5 rounded-lg px-2.5 py-1 text-white font-medium">2. Décrire l'interface</span>
+              <span class="text-slate-600">→</span>
+              <span class="bg-white/5 rounded-lg px-2.5 py-1 text-white font-medium">3. Copier le code</span>
+              <span class="text-slate-600">→</span>
+              <span class="bg-white/5 rounded-lg px-2.5 py-1 text-white font-medium">4. Coller dans app/</span>
+              <span class="text-slate-600">→</span>
+              <span class="bg-white/5 rounded-lg px-2.5 py-1 text-white font-medium">5. Claude Code ajuste</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tip-box p-4">
+          <p class="text-sm text-green-300 font-semibold mb-1">✅ En pratique</p>
+          <p class="text-xs text-slate-400 leading-relaxed">Crée un compte gratuit sur <span class="text-blue-400">vercel.com</span>, clique sur "Import Project", sélectionne ton repo GitHub — c'est en ligne. v0.dev est accessible sur <span class="text-blue-400">v0.dev</span> avec le même compte. Ajoute tes variables d'environnement dans les réglages du projet sur le dashboard Vercel.</p>
+        </div>
+      </div>
+
+      <!-- Next.js -->
+      <div class="card p-7 mb-5">
+        <div class="flex items-start gap-5 mb-5">
+          <div class="w-14 h-14 rounded-2xl bg-black border border-white/20 flex items-center justify-center shrink-0">
+            <svg viewBox="0 0 24 24" class="w-8 h-8 fill-white"><path d="M11.572 0c-.176 0-.31.001-.358.007a19.76 19.76 0 0 1-.364.033C7.443.346 4.25 2.185 2.228 5.012a11.875 11.875 0 0 0-2.119 5.243c-.096.659-.108.854-.108 1.747s.012 1.089.108 1.748c.652 4.506 3.86 8.292 8.209 9.695.779.25 1.6.422 2.534.525.363.04 1.935.04 2.299 0 1.611-.178 2.977-.577 4.323-1.264.207-.106.247-.134.219-.158-.02-.013-.9-1.193-1.955-2.62l-1.919-2.592-2.404-3.558a338.739 338.739 0 0 0-2.422-3.556c-.009-.002-.018 1.579-.023 3.51-.007 3.38-.01 3.515-.052 3.595a.426.426 0 0 1-.206.214c-.075.037-.14.044-.495.044H7.81l-.108-.068a.438.438 0 0 1-.157-.171l-.05-.106.006-4.703.007-4.705.072-.092a.645.645 0 0 1 .174-.143c.096-.047.134-.051.54-.051.478 0 .558.018.682.154.035.038 1.337 1.999 2.895 4.361a10760.433 10760.433 0 0 0 4.735 7.17l1.9 2.879.096-.063a12.317 12.317 0 0 0 2.466-2.163 11.944 11.944 0 0 0 2.824-6.134c.096-.66.108-.854.108-1.748 0-.893-.012-1.088-.108-1.747-.652-4.506-3.859-8.292-8.208-9.695a12.597 12.597 0 0 0-2.499-.523A33.119 33.119 0 0 0 11.573 0z"/></svg>
+          </div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2 mb-1">
+              <h3 class="text-2xl font-bold">Next.js + Tailwind</h3>
+              <span class="tag bg-slate-700/40 text-slate-300 border border-slate-600/20 rounded-md px-2 py-0.5">Le socle de ton app</span>
+              <span class="maturity-badge badge-start">Démarrage</span>
+            </div>
+            <p class="text-slate-500 text-sm">Le framework frontend le plus populaire du moment</p>
+          </div>
+        </div>
+
+        <div class="analogy-box p-4 mb-5">
+          <p class="text-sm text-slate-300 leading-relaxed">
+            <span class="text-purple-300 font-semibold">💡 L'analogie simple :</span> si ton application web était une maison, <strong class="text-white">Next.js</strong> serait la structure (les murs, le toit, les fondations) et <strong class="text-white">Tailwind</strong> serait la décoration intérieure (les couleurs, l'espacement, le style). Next.js s'occupe de comment les pages se chargent et fonctionnent. Tailwind s'occupe de leur apparence.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4 mb-5">
+          <div>
+            <h4 class="text-sm font-semibold text-white mb-2">Next.js — ce que ça fait pour toi</h4>
+            <div class="space-y-2">
+              <div class="flex items-start gap-2 text-xs text-slate-400"><span class="text-blue-400 mt-0.5 shrink-0">→</span> Gère automatiquement la navigation entre tes pages</div>
+              <div class="flex items-start gap-2 text-xs text-slate-400"><span class="text-blue-400 mt-0.5 shrink-0">→</span> Optimise les images et la vitesse de chargement</div>
+              <div class="flex items-start gap-2 text-xs text-slate-400"><span class="text-blue-400 mt-0.5 shrink-0">→</span> Permet de créer des API directement dans le projet</div>
+              <div class="flex items-start gap-2 text-xs text-slate-400"><span class="text-blue-400 mt-0.5 shrink-0">→</span> Structure le projet de façon cohérente</div>
+            </div>
+          </div>
+          <div>
+            <h4 class="text-sm font-semibold text-white mb-2">Tailwind — ce que ça fait pour toi</h4>
+            <div class="space-y-2">
+              <div class="flex items-start gap-2 text-xs text-slate-400"><span class="text-cyan-400 mt-0.5 shrink-0">→</span> Stylise les éléments avec des classes lisibles en français</div>
+              <div class="flex items-start gap-2 text-xs text-slate-400"><span class="text-cyan-400 mt-0.5 shrink-0">→</span> Rend l'app responsive (mobile + desktop) sans effort</div>
+              <div class="flex items-start gap-2 text-xs text-slate-400"><span class="text-cyan-400 mt-0.5 shrink-0">→</span> Pas besoin de fichiers CSS séparés à gérer</div>
+              <div class="flex items-start gap-2 text-xs text-slate-400"><span class="text-cyan-400 mt-0.5 shrink-0">→</span> Compatible avec tous les composants générés par v0.dev</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tip-box p-4">
+          <p class="text-sm text-green-300 font-semibold mb-1">✅ En pratique</p>
+          <p class="text-xs text-slate-400 leading-relaxed">Tu ne vas quasiment jamais configurer Next.js manuellement. Tu demandes à Claude Code de créer une page, et il s'en charge. Ce que tu dois retenir : ton projet Next.js a un dossier <code class="text-xs bg-white/10 rounded px-1">app/</code> — chaque sous-dossier dedans correspond à une URL de ton site.</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         SECTION 3 — BACKEND
+    ══════════════════════════════════════════ -->
+    <section id="nav-backend" class="mb-20">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="section-label text-emerald-400 uppercase font-semibold tracking-widest">Partie 4</span>
+        <div class="flex-1 h-px bg-gradient-to-r from-emerald-500/30 to-transparent"></div>
+      </div>
+      <h2 class="text-3xl font-bold mb-2">Ce qui tourne en coulisse</h2>
+      <p class="text-slate-500 mb-10">Le "backend", c'est la partie invisible — la base de données, la sécurité, la logique métier. L'utilisateur ne la voit pas, mais sans elle rien ne fonctionne.</p>
+
+      <!-- Supabase -->
+      <div class="card p-7 mb-5">
+        <div class="flex items-start gap-5 mb-5">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-700 flex items-center justify-center shrink-0 text-2xl">🗄️</div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2 mb-1">
+              <h3 class="text-2xl font-bold">Supabase</h3>
+              <span class="tag bg-emerald-500/15 text-emerald-300 border border-emerald-500/20 rounded-md px-2 py-0.5">Base de données</span>
+              <span class="maturity-badge badge-start">Démarrage</span>
+            </div>
+            <p class="text-slate-500 text-sm">Le cerveau qui stocke toutes les données de ton application</p>
+          </div>
+        </div>
+
+        <div class="analogy-box p-4 mb-5">
+          <p class="text-sm text-slate-300 leading-relaxed">
+            <span class="text-purple-300 font-semibold">💡 L'analogie simple :</span> une base de données, c'est comme un Excel ultra-puissant qui tourne en permanence sur internet. Chaque tableau dans Excel = une "table" dans Supabase. Par exemple : une table "users" avec leurs noms et emails, une table "commandes" avec les achats, etc. Supabase t'offre cette base de données + une interface visuelle pour la gérer sans écrire de code SQL.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-3 gap-3 mb-5">
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-3">
+            <p class="text-sm font-medium text-emerald-300 mb-1">📊 Base Postgres</p>
+            <p class="text-xs text-slate-400 leading-relaxed">Une vraie base de données relationnelle. Tu peux voir et modifier tes données depuis un tableau de bord web.</p>
+          </div>
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-3">
+            <p class="text-sm font-medium text-emerald-300 mb-1">📡 API automatique</p>
+            <p class="text-xs text-slate-400 leading-relaxed">Dès que tu crées une table, Supabase génère automatiquement les routes pour lire/écrire des données depuis ton app.</p>
+          </div>
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-3">
+            <p class="text-sm font-medium text-emerald-300 mb-1">🗂️ Stockage de fichiers</p>
+            <p class="text-xs text-slate-400 leading-relaxed">Pour stocker des images, PDFs ou vidéos uploadées par tes utilisateurs — comme un Google Drive intégré.</p>
+          </div>
+        </div>
+
+        <div class="tip-box p-4">
+          <p class="text-sm text-green-300 font-semibold mb-1">✅ En pratique</p>
+          <p class="text-xs text-slate-400 leading-relaxed">Tu crées ton projet Supabase sur leur site, tu copies deux variables (URL + clé API) dans un fichier <code class="text-xs bg-white/10 rounded px-1">.env</code>, et tu dis à Claude Code : <span class="text-orange-200 italic">"connecte mon app à Supabase"</span>. Il fait le reste.</p>
+        </div>
+      </div>
+
+      <!-- Clerk -->
+      <div class="card p-7">
+        <div class="flex items-start gap-5 mb-5">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-slate-600 to-slate-800 flex items-center justify-center shrink-0 text-2xl border border-white/10">🔐</div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2 mb-1">
+              <h3 class="text-2xl font-bold">Clerk</h3>
+              <span class="tag bg-slate-600/40 text-slate-300 border border-slate-500/20 rounded-md px-2 py-0.5">Authentification</span>
+              <span class="maturity-badge badge-start">Démarrage</span>
+            </div>
+            <p class="text-slate-500 text-sm">Tout ce qui concerne l'identité de tes utilisateurs — prêt en 10 minutes</p>
+          </div>
+        </div>
+
+        <div class="analogy-box p-4 mb-5">
+          <p class="text-sm text-slate-300 leading-relaxed">
+            <span class="text-purple-300 font-semibold">💡 L'analogie simple :</span> l'authentification, c'est le système de badges d'entrée de ton immeuble. Clerk s'occupe de tout : créer les badges (inscription), les vérifier (connexion), les révoquer (déconnexion), et gérer les cas spéciaux (mot de passe oublié, connexion avec Google). Sans Clerk, tu devrais construire tout ça toi-même — ce qui prendrait des semaines et serait risqué pour la sécurité.
+          </p>
+        </div>
+
+        <div class="space-y-2 mb-5">
+          <h4 class="text-sm font-semibold text-slate-300 mb-2">Ce que Clerk gère à ta place :</h4>
+          <div class="grid sm:grid-cols-2 gap-2 text-xs text-slate-400">
+            <div class="flex items-center gap-2"><span class="text-green-400">✓</span> Inscription par email + vérification</div>
+            <div class="flex items-center gap-2"><span class="text-green-400">✓</span> Connexion Google, GitHub, Apple…</div>
+            <div class="flex items-center gap-2"><span class="text-green-400">✓</span> Double authentification (2FA)</div>
+            <div class="flex items-center gap-2"><span class="text-green-400">✓</span> Gestion des organisations et équipes</div>
+            <div class="flex items-center gap-2"><span class="text-green-400">✓</span> Page de profil utilisateur</div>
+            <div class="flex items-center gap-2"><span class="text-green-400">✓</span> Sécurité et conformité RGPD</div>
+          </div>
+        </div>
+
+        <div class="tip-box p-4">
+          <p class="text-sm text-green-300 font-semibold mb-1">✅ En pratique</p>
+          <p class="text-xs text-slate-400 leading-relaxed">Tu crées un compte sur <span class="text-blue-400">clerk.com</span>, tu copies tes clés API, et tu dis à Claude Code : <span class="text-orange-200 italic">"ajoute l'authentification Clerk avec connexion Google et email"</span>. Ton app aura un système de connexion complet en quelques minutes.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         SECTION 4 — MONÉTISATION
+    ══════════════════════════════════════════ -->
+    <section id="nav-stripe" class="mb-20">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="section-label text-indigo-400 uppercase font-semibold tracking-widest">Partie 5</span>
+        <div class="flex-1 h-px bg-gradient-to-r from-indigo-500/30 to-transparent"></div>
+      </div>
+      <h2 class="text-3xl font-bold mb-2">Encaisser des paiements</h2>
+      <p class="text-slate-500 mb-10">Un SaaS sans système de paiement n'est qu'un projet. Stripe te permet de passer du statut de "projet cool" à celui d'entreprise qui génère des revenus.</p>
+
+      <div class="card p-7">
+        <div class="flex items-start gap-5 mb-5">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-600 to-violet-700 flex items-center justify-center shrink-0 text-2xl">💳</div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2 mb-1">
+              <h3 class="text-2xl font-bold">Stripe</h3>
+              <span class="tag bg-indigo-500/15 text-indigo-300 border border-indigo-500/20 rounded-md px-2 py-0.5">Paiements</span>
+              <span class="maturity-badge badge-inter">Intermédiaire</span>
+            </div>
+            <p class="text-slate-500 text-sm">Le standard mondial des paiements en ligne pour les développeurs</p>
+          </div>
+        </div>
+
+        <div class="analogy-box p-4 mb-5">
+          <p class="text-sm text-slate-300 leading-relaxed">
+            <span class="text-purple-300 font-semibold">💡 L'analogie simple :</span> Stripe, c'est le terminal de paiement de ton application. Comme un TPE dans un magasin, il gère la communication sécurisée entre ta carte bancaire, ta banque et le compte du vendeur. Mais contrairement à un vrai TPE, Stripe gère aussi les abonnements, les remboursements, les factures, et les taxes automatiquement.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4 mb-5">
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4">
+            <h4 class="text-sm font-semibold text-white mb-2">Paiement unique</h4>
+            <p class="text-xs text-slate-400 leading-relaxed mb-2">Un client paie une fois pour accéder à un produit ou service. Stripe génère une page de paiement sécurisée, gère la transaction, et te notifie quand c'est fait.</p>
+            <p class="text-xs text-indigo-300">Ex : achat d'un template, d'un cours en ligne</p>
+          </div>
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4">
+            <h4 class="text-sm font-semibold text-white mb-2">Abonnement (SaaS)</h4>
+            <p class="text-xs text-slate-400 leading-relaxed mb-2">Le client paie tous les mois. Stripe gère les renouvellements, les échecs de paiement, les upgrades/downgrades de plan, et le portail client.</p>
+            <p class="text-xs text-indigo-300">Ex : plan mensuel à 29€/mois</p>
+          </div>
+        </div>
+
+        <div class="mb-5 bg-black/20 border border-white/5 rounded-xl p-4">
+          <h4 class="text-sm font-semibold text-slate-300 mb-3">Le concept clé : les Webhooks</h4>
+          <p class="text-xs text-slate-400 leading-relaxed mb-2">Un webhook, c'est une notification automatique que Stripe envoie à ton app quand quelque chose se passe (paiement réussi, abonnement annulé, remboursement demandé…). Ton app "écoute" ces notifications et agit en conséquence.</p>
+          <p class="text-xs text-slate-500 italic">→ Claude Code peut écrire tous les handlers de webhooks à ta place.</p>
+        </div>
+
+        <div class="tip-box p-4">
+          <p class="text-sm text-green-300 font-semibold mb-1">✅ En pratique</p>
+          <p class="text-xs text-slate-400 leading-relaxed">Stripe prend <strong class="text-white">2.9% + 0.30€</strong> par transaction. Pas de frais mensuels tant que tu ne gagnes rien. Tu crées ton compte sur <span class="text-blue-400">stripe.com</span>, puis demande à Claude Code : <span class="text-orange-200 italic">"crée un abonnement Stripe avec les plans gratuit et pro à 19€/mois"</span>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         SECTION — SERVICES
+    ══════════════════════════════════════════ -->
+    <section id="nav-services" class="mb-20">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="section-label text-rose-400 uppercase font-semibold tracking-widest">Partie 6</span>
+        <div class="flex-1 h-px bg-gradient-to-r from-rose-500/30 to-transparent"></div>
+      </div>
+      <h2 class="text-3xl font-bold mb-2">Les services qui font tourner la machine</h2>
+      <p class="text-slate-500 mb-8">Ces outils tournent en arrière-plan et s'occupent chacun d'une responsabilité précise : les emails, la protection, les erreurs, les analytics. Tu les connectes une fois, ils fonctionnent tout seuls ensuite.</p>
+
+      <div class="grid md:grid-cols-2 gap-5">
+
+        <!-- Resend -->
+        <div class="card p-6">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-rose-500 to-orange-500 flex items-center justify-center shrink-0 text-xl">✉️</div>
+            <div>
+              <div class="flex flex-wrap items-center gap-2 mb-0.5">
+                <h3 class="text-xl font-bold">Resend</h3>
+                <span class="tag bg-rose-500/15 text-rose-300 border border-rose-500/20 rounded px-2 py-0.5">Emails auto</span>
+                <span class="maturity-badge badge-inter">Intermédiaire</span>
+              </div>
+              <p class="text-slate-500 text-xs">Envoie des emails depuis ton app comme un pro</p>
+            </div>
+          </div>
+          <div class="analogy-box p-3 mb-4">
+            <p class="text-xs text-slate-300 leading-relaxed">
+              <span class="text-purple-300 font-semibold">💡 L'analogie :</span> il y a deux types d'emails professionnels. Les emails <em>marketing</em> (newsletters) — pour ça, tu utiliserais Mailchimp. Et les emails <em>transactionnels</em> déclenchés automatiquement par une action utilisateur — c'est pour ça que Resend existe.
+            </p>
+          </div>
+          <div class="grid grid-cols-2 gap-1.5 mb-4">
+            <div class="flex items-center gap-1.5 text-xs text-slate-400 bg-white/[0.02] rounded-lg p-2 border border-white/5"><span class="text-rose-400 shrink-0">📧</span> Bienvenue après inscription</div>
+            <div class="flex items-center gap-1.5 text-xs text-slate-400 bg-white/[0.02] rounded-lg p-2 border border-white/5"><span class="text-rose-400 shrink-0">📧</span> Confirmation de paiement</div>
+            <div class="flex items-center gap-1.5 text-xs text-slate-400 bg-white/[0.02] rounded-lg p-2 border border-white/5"><span class="text-rose-400 shrink-0">📧</span> Abonnement bientôt expiré</div>
+            <div class="flex items-center gap-1.5 text-xs text-slate-400 bg-white/[0.02] rounded-lg p-2 border border-white/5"><span class="text-rose-400 shrink-0">📧</span> Réinitialisation de mot de passe</div>
+          </div>
+          <div class="tip-box p-3">
+            <p class="text-xs text-green-300 font-semibold mb-1">✅ En pratique</p>
+            <p class="text-xs text-slate-400">Gratuit jusqu'à 3 000 emails/mois. Demande à Claude Code : <span class="text-orange-200 italic">"envoie un email de bienvenue avec Resend quand un utilisateur s'inscrit via Clerk"</span>.</p>
+          </div>
+        </div>
+
+        <!-- Upstash -->
+        <div class="card p-6">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-teal-400 to-green-600 flex items-center justify-center shrink-0 text-xl">⚡</div>
+            <div>
+              <div class="flex flex-wrap items-center gap-2 mb-0.5">
+                <h3 class="text-xl font-bold">Upstash</h3>
+                <span class="tag bg-teal-500/15 text-teal-300 border border-teal-500/20 rounded px-2 py-0.5">Cache & Rate Limit</span>
+                <span class="maturity-badge badge-prod">Production</span>
+              </div>
+              <p class="text-slate-500 text-xs">Vitesse et protection — gratuit pour démarrer</p>
+            </div>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-3 mb-4">
+            <div class="analogy-box p-3">
+              <p class="text-xs font-semibold text-purple-300 mb-1.5">💡 Le Cache</p>
+              <p class="text-xs text-slate-400 leading-relaxed">Sans cache : 1 000 visiteurs = 1 000 appels au même service. Avec cache : 1 seul appel, la réponse est mémorisée et servie à tout le monde. 1 000× plus rapide.</p>
+            </div>
+            <div class="analogy-box p-3">
+              <p class="text-xs font-semibold text-purple-300 mb-1.5">💡 Le Rate Limit</p>
+              <p class="text-xs text-slate-400 leading-relaxed">Le videur de ton API. Il dit "max 10 requêtes/minute par utilisateur". Protège contre les bots et les abus qui videraient ton budget IA.</p>
+            </div>
+          </div>
+          <div class="tip-box p-3">
+            <p class="text-xs text-green-300 font-semibold mb-1">✅ En pratique</p>
+            <p class="text-xs text-slate-400">Gratuit jusqu'à 10 000 commandes/jour. Demande à Claude Code : <span class="text-orange-200 italic">"ajoute un rate limit Upstash sur /api/generate — max 20 requêtes/heure par utilisateur"</span>.</p>
+          </div>
+        </div>
+
+        <!-- Sentry -->
+        <div class="card p-6">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-600 to-orange-700 flex items-center justify-center shrink-0 text-xl">🚨</div>
+            <div>
+              <div class="flex flex-wrap items-center gap-2 mb-0.5">
+                <h3 class="text-xl font-bold">Sentry</h3>
+                <span class="tag bg-amber-500/15 text-amber-300 border border-amber-500/20 rounded px-2 py-0.5">Détection d'erreurs</span>
+                <span class="maturity-badge badge-prod">Production</span>
+              </div>
+              <p class="text-slate-500 text-xs">Alerte en temps réel quand quelque chose plante</p>
+            </div>
+          </div>
+          <div class="analogy-box p-3 mb-4">
+            <p class="text-xs text-slate-300 leading-relaxed">
+              <span class="text-purple-300 font-semibold">💡 L'analogie :</span> Sentry, c'est le détecteur d'incendie de ton app. Si quelque chose plante chez un utilisateur à 3h du matin, tu reçois une alerte avec exactement ce qui s'est passé — le message d'erreur, le fichier concerné, et parfois même ce que l'utilisateur faisait au moment du bug.
+            </p>
+          </div>
+          <div class="space-y-1.5 mb-4">
+            <div class="flex items-start gap-2 text-xs text-slate-400"><span class="text-amber-400 shrink-0">→</span> Capture les erreurs JavaScript et serveur</div>
+            <div class="flex items-start gap-2 text-xs text-slate-400"><span class="text-amber-400 shrink-0">→</span> T'envoie un email/Slack à chaque nouveau bug</div>
+            <div class="flex items-start gap-2 text-xs text-slate-400"><span class="text-amber-400 shrink-0">→</span> Gratuit jusqu'à 5 000 erreurs/mois</div>
+          </div>
+          <div class="tip-box p-3">
+            <p class="text-xs text-green-300 font-semibold mb-1">✅ En pratique</p>
+            <p class="text-xs text-slate-400">Installe Sentry dès le début. Quand une erreur arrive, donne le message Sentry à Claude Code — il corrigera le bug directement.</p>
+          </div>
+        </div>
+
+        <!-- PostHog -->
+        <div class="card p-6">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-500 to-amber-400 flex items-center justify-center shrink-0 text-xl">📊</div>
+            <div>
+              <div class="flex flex-wrap items-center gap-2 mb-0.5">
+                <h3 class="text-xl font-bold">PostHog</h3>
+                <span class="tag bg-yellow-500/15 text-yellow-300 border border-yellow-500/20 rounded px-2 py-0.5">Analytics</span>
+                <span class="maturity-badge badge-prod">Production</span>
+              </div>
+              <p class="text-slate-500 text-xs">Comprends comment tes utilisateurs se comportent</p>
+            </div>
+          </div>
+          <div class="analogy-box p-3 mb-4">
+            <p class="text-xs text-slate-300 leading-relaxed">
+              <span class="text-purple-300 font-semibold">💡 L'analogie :</span> PostHog, c'est les caméras de surveillance d'un magasin — dans le bon sens. Tu vois quels rayons les clients visitent, où ils s'arrêtent, où ils abandonnent. Tu sais quelles features sont utilisées et où les gens décrochent.
+            </p>
+          </div>
+          <div class="space-y-1.5 mb-4">
+            <div class="flex items-start gap-2 text-xs text-slate-400"><span class="text-yellow-400 shrink-0">→</span> Enregistre les actions utilisateurs (clics, navigations)</div>
+            <div class="flex items-start gap-2 text-xs text-slate-400"><span class="text-yellow-400 shrink-0">→</span> Session replays : revis la session d'un vrai utilisateur</div>
+            <div class="flex items-start gap-2 text-xs text-slate-400"><span class="text-yellow-400 shrink-0">→</span> Gratuit jusqu'à 1 million d'events/mois</div>
+          </div>
+          <div class="tip-box p-3">
+            <p class="text-xs text-green-300 font-semibold mb-1">✅ En pratique</p>
+            <p class="text-xs text-slate-400">Dis à Claude Code : <span class="text-orange-200 italic">"ajoute un event PostHog 'plan_upgraded' quand un user passe en Pro"</span>.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         WORKFLOW
+    ══════════════════════════════════════════ -->
+    <section id="nav-recap" class="mb-20">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="section-label text-purple-400 uppercase font-semibold tracking-widest">Récapitulatif</span>
+        <div class="flex-1 h-px bg-gradient-to-r from-purple-500/30 to-transparent"></div>
+      </div>
+      <h2 class="text-3xl font-bold mb-2">La stack complète — vue d'ensemble</h2>
+      <p class="text-slate-500 mb-8">Comment les outils s'articulent, le workflow au quotidien, et ce que ça coûte réellement.</p>
+
+      <!-- Schéma -->
+      <div class="card p-6 md:p-8 overflow-x-auto mb-5">
+        <p class="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-5">🗺️ Architecture — du développeur à l'utilisateur</p>
+        <div class="min-w-[600px] space-y-2">
+
+          <!-- LAYER : DÉVELOPPEUR -->
+          <div class="relative">
+            <div class="bg-purple-950/30 border border-purple-500/20 rounded-2xl p-4">
+              <p class="text-xs font-semibold text-purple-400 uppercase tracking-widest mb-3">🧑‍💻 Espace de développement — sur ton ordinateur</p>
+              <div class="grid grid-cols-2 gap-3">
+                <div class="bg-orange-500/10 border border-orange-500/20 rounded-xl p-3 text-center relative">
+                  <p class="text-base mb-1">🤖</p>
+                  <p class="text-xs font-bold text-orange-300">Claude Code</p>
+                  <p class="text-xs text-slate-500 mt-0.5">L'IA qui écrit le code</p>
+                  <span class="absolute top-1.5 right-1.5 bg-amber-500/15 text-amber-300 border border-amber-500/25 rounded-full px-1.5 py-0.5 text-xs font-bold">20 €/mois</span>
+                </div>
+                <div class="bg-blue-500/10 border border-blue-500/20 rounded-xl p-3 text-center relative">
+                  <p class="text-base mb-1">✏️</p>
+                  <p class="text-xs font-bold text-blue-300">VS Code</p>
+                  <p class="text-xs text-slate-500 mt-0.5">L'éditeur de code</p>
+                  <span class="absolute top-1.5 right-1.5 bg-green-500/15 text-green-300 border border-green-500/25 rounded-full px-1.5 py-0.5 text-xs font-bold">Gratuit</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col items-center gap-0.5 py-1">
+            <div class="w-px h-4 bg-orange-500/40"></div>
+            <div class="flex items-center gap-2">
+              <div class="h-px flex-1 w-16 bg-orange-500/30"></div>
+              <div class="bg-orange-900/40 border border-orange-500/30 rounded-full px-3 py-1 text-xs text-orange-300 font-medium">commit → push</div>
+              <div class="h-px flex-1 w-16 bg-orange-500/30"></div>
+            </div>
+            <div class="w-px h-4 bg-orange-500/40"></div>
+          </div>
+          <div class="bg-orange-950/20 border border-orange-500/15 rounded-2xl p-4">
+            <p class="text-xs font-semibold text-orange-400 uppercase tracking-widest mb-3">🌿 Versioning & sauvegarde — dans le cloud</p>
+            <div class="flex justify-center">
+              <div class="bg-orange-500/10 border border-orange-500/20 rounded-xl p-3 text-center w-48 relative">
+                <p class="text-base mb-1">🐙</p>
+                <p class="text-xs font-bold text-white">GitHub</p>
+                <p class="text-xs text-slate-500 mt-0.5">Historique complet du projet<br/>Sauvegarde dans le cloud</p>
+                <span class="absolute top-1.5 right-1.5 bg-green-500/15 text-green-300 border border-green-500/25 rounded-full px-1.5 py-0.5 text-xs font-bold">Gratuit</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col items-center gap-0.5 py-1">
+            <div class="w-px h-4 bg-slate-500/40"></div>
+            <div class="flex items-center gap-2">
+              <div class="h-px flex-1 w-16 bg-slate-500/20"></div>
+              <div class="bg-slate-800/60 border border-slate-600/30 rounded-full px-3 py-1 text-xs text-slate-400 font-medium">déploiement automatique</div>
+              <div class="h-px flex-1 w-16 bg-slate-500/20"></div>
+            </div>
+            <div class="w-px h-4 bg-slate-500/40"></div>
+          </div>
+          <div class="bg-blue-950/20 border border-blue-500/15 rounded-2xl p-4">
+            <p class="text-xs font-semibold text-blue-400 uppercase tracking-widest mb-3">🖥️ Frontend — ce que l'utilisateur voit</p>
+            <div class="grid grid-cols-3 gap-3">
+              <div class="bg-black/30 border border-white/8 rounded-xl p-3 text-center relative">
+                <p class="text-base mb-1">⚡</p>
+                <p class="text-xs font-bold text-white">Next.js + Tailwind</p>
+                <p class="text-xs text-slate-500 mt-0.5">Pages, navigation, mise en page</p>
+                <span class="absolute top-1.5 right-1.5 bg-green-500/15 text-green-300 border border-green-500/25 rounded-full px-1.5 py-0.5 text-xs font-bold">Gratuit</span>
+              </div>
+              <div class="bg-black/30 border border-white/8 rounded-xl p-3 text-center relative">
+                <p class="text-base mb-1">🚀</p>
+                <p class="text-xs font-bold text-white">Vercel</p>
+                <p class="text-xs text-slate-500 mt-0.5">Héberge et distribue l'app</p>
+                <span class="absolute top-1.5 right-1.5 bg-green-500/15 text-green-300 border border-green-500/25 rounded-full px-1.5 py-0.5 text-xs font-bold">Gratuit</span>
+              </div>
+              <div class="bg-violet-500/10 border border-violet-500/20 rounded-xl p-3 text-center relative">
+                <p class="text-base mb-1">🎨</p>
+                <p class="text-xs font-bold text-violet-300">v0.dev</p>
+                <p class="text-xs text-slate-500 mt-0.5">Génère l'UI<br/><span class="text-violet-500">inclus Vercel</span></p>
+                <span class="absolute top-1.5 right-1.5 bg-green-500/15 text-green-300 border border-green-500/25 rounded-full px-1.5 py-0.5 text-xs font-bold">Gratuit</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col items-center gap-0.5 py-1">
+            <div class="w-px h-4 bg-emerald-500/40"></div>
+            <div class="flex items-center gap-2">
+              <div class="h-px flex-1 w-16 bg-emerald-500/20"></div>
+              <div class="bg-emerald-900/30 border border-emerald-500/20 rounded-full px-3 py-1 text-xs text-emerald-400 font-medium">requêtes API</div>
+              <div class="h-px flex-1 w-16 bg-emerald-500/20"></div>
+            </div>
+            <div class="w-px h-4 bg-emerald-500/40"></div>
+          </div>
+          <div class="bg-emerald-950/20 border border-emerald-500/15 rounded-2xl p-4">
+            <p class="text-xs font-semibold text-emerald-400 uppercase tracking-widest mb-3">⚙️ Backend — la logique invisible</p>
+            <div class="grid grid-cols-3 gap-3">
+              <div class="bg-black/30 border border-white/8 rounded-xl p-3 text-center relative">
+                <p class="text-base mb-1">🗄️</p>
+                <p class="text-xs font-bold text-emerald-300">Supabase</p>
+                <p class="text-xs text-slate-500 mt-0.5">Stocke toutes les données</p>
+                <span class="absolute top-1.5 right-1.5 bg-green-500/15 text-green-300 border border-green-500/25 rounded-full px-1.5 py-0.5 text-xs font-bold">Gratuit</span>
+              </div>
+              <div class="bg-black/30 border border-white/8 rounded-xl p-3 text-center relative">
+                <p class="text-base mb-1">🔐</p>
+                <p class="text-xs font-bold text-slate-300">Clerk</p>
+                <p class="text-xs text-slate-500 mt-0.5">Gère les comptes utilisateurs</p>
+                <span class="absolute top-1.5 right-1.5 bg-green-500/15 text-green-300 border border-green-500/25 rounded-full px-1.5 py-0.5 text-xs font-bold">Gratuit</span>
+              </div>
+              <div class="bg-black/30 border border-white/8 rounded-xl p-3 text-center relative">
+                <p class="text-base mb-1">⚡</p>
+                <p class="text-xs font-bold text-teal-300">Upstash</p>
+                <p class="text-xs text-slate-500 mt-0.5">Cache & limite les requêtes</p>
+                <span class="absolute top-1.5 right-1.5 bg-green-500/15 text-green-300 border border-green-500/25 rounded-full px-1.5 py-0.5 text-xs font-bold">Gratuit</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col items-center gap-0.5 py-1">
+            <div class="w-px h-4 bg-indigo-500/40"></div>
+            <div class="flex items-center gap-2">
+              <div class="h-px flex-1 w-16 bg-indigo-500/20"></div>
+              <div class="bg-indigo-900/30 border border-indigo-500/20 rounded-full px-3 py-1 text-xs text-indigo-400 font-medium">appels aux services externes</div>
+              <div class="h-px flex-1 w-16 bg-indigo-500/20"></div>
+            </div>
+            <div class="w-px h-4 bg-indigo-500/40"></div>
+          </div>
+          <div class="bg-indigo-950/20 border border-indigo-500/15 rounded-2xl p-4">
+            <p class="text-xs font-semibold text-indigo-400 uppercase tracking-widest mb-3">🔌 Services externes — spécialisés dans leur domaine</p>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="bg-black/30 border border-white/8 rounded-xl p-3 text-center relative">
+                <p class="text-base mb-1">💳</p>
+                <p class="text-xs font-bold text-indigo-300">Stripe</p>
+                <p class="text-xs text-slate-500 mt-0.5">Traite les paiements</p>
+                <span class="absolute top-1.5 right-1.5 bg-green-500/15 text-green-300 border border-green-500/25 rounded-full px-1.5 py-0.5 text-xs font-bold">2,9% / vente</span>
+              </div>
+              <div class="bg-black/30 border border-white/8 rounded-xl p-3 text-center relative">
+                <p class="text-base mb-1">✉️</p>
+                <p class="text-xs font-bold text-rose-300">Resend</p>
+                <p class="text-xs text-slate-500 mt-0.5">Envoie les emails automatiques</p>
+                <span class="absolute top-1.5 right-1.5 bg-green-500/15 text-green-300 border border-green-500/25 rounded-full px-1.5 py-0.5 text-xs font-bold">Gratuit</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col items-center gap-0.5 py-1">
+            <div class="w-px h-4 bg-amber-500/40"></div>
+            <div class="flex items-center gap-2">
+              <div class="h-px flex-1 w-16 bg-amber-500/20"></div>
+              <div class="bg-amber-900/30 border border-amber-500/20 rounded-full px-3 py-1 text-xs text-amber-400 font-medium">surveillance en temps réel</div>
+              <div class="h-px flex-1 w-16 bg-amber-500/20"></div>
+            </div>
+            <div class="w-px h-4 bg-amber-500/40"></div>
+          </div>
+          <div class="bg-amber-950/20 border border-amber-500/15 rounded-2xl p-4">
+            <p class="text-xs font-semibold text-amber-400 uppercase tracking-widest mb-3">🔭 Observabilité — tu sais ce qui se passe</p>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="bg-black/30 border border-white/8 rounded-xl p-3 text-center relative">
+                <p class="text-base mb-1">🚨</p>
+                <p class="text-xs font-bold text-amber-300">Sentry</p>
+                <p class="text-xs text-slate-500 mt-0.5">Détecte et alerte sur les erreurs</p>
+                <span class="absolute top-1.5 right-1.5 bg-green-500/15 text-green-300 border border-green-500/25 rounded-full px-1.5 py-0.5 text-xs font-bold">Gratuit</span>
+              </div>
+              <div class="bg-black/30 border border-white/8 rounded-xl p-3 text-center relative">
+                <p class="text-base mb-1">📊</p>
+                <p class="text-xs font-bold text-yellow-300">PostHog</p>
+                <p class="text-xs text-slate-500 mt-0.5">Comprend comment les users utilisent l'app</p>
+                <span class="absolute top-1.5 right-1.5 bg-green-500/15 text-green-300 border border-green-500/25 rounded-full px-1.5 py-0.5 text-xs font-bold">Gratuit</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col items-center gap-0.5 py-1">
+            <div class="w-px h-4 bg-pink-500/40"></div>
+            <div class="flex items-center gap-2">
+              <div class="h-px flex-1 w-16 bg-pink-500/20"></div>
+              <div class="bg-pink-900/30 border border-pink-500/20 rounded-full px-3 py-1 text-xs text-pink-400 font-medium">via leur navigateur</div>
+              <div class="h-px flex-1 w-16 bg-pink-500/20"></div>
+            </div>
+            <div class="w-px h-4 bg-pink-500/40"></div>
+          </div>
+          <div class="bg-pink-950/20 border border-pink-500/20 rounded-2xl p-4">
+            <p class="text-xs font-semibold text-pink-400 uppercase tracking-widest mb-3">👤 Utilisateur final — n'importe où dans le monde</p>
+            <div class="grid grid-cols-3 gap-3">
+              <div class="bg-black/30 border border-white/8 rounded-xl p-3 text-center relative">
+                <p class="text-base mb-1">🔐</p>
+                <p class="text-xs font-bold text-white">S'inscrit / se connecte</p>
+                <p class="text-xs text-slate-500 mt-0.5">via Clerk</p>
+              </div>
+              <div class="bg-black/30 border border-white/8 rounded-xl p-3 text-center relative">
+                <p class="text-base mb-1">💳</p>
+                <p class="text-xs font-bold text-white">Paie un abonnement</p>
+                <p class="text-xs text-slate-500 mt-0.5">via Stripe</p>
+              </div>
+              <div class="bg-black/30 border border-white/8 rounded-xl p-3 text-center relative">
+                <p class="text-base mb-1">✉️</p>
+                <p class="text-xs font-bold text-white">Reçoit des emails</p>
+                <p class="text-xs text-slate-500 mt-0.5">via Resend</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Budget total -->
+      <div class="card p-6 md:p-8">
+        <p class="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-5">💰 Budget — ce que ça coûte réellement</p>
+        <div class="flex items-center justify-between flex-wrap gap-4 mb-4">
+          <div>
+            <p class="text-sm font-semibold text-white mb-1">Coût total pour lancer ton premier projet</p>
+            <p class="text-xs text-slate-500">Tous les services gratuits + l'abonnement Claude obligatoire</p>
+          </div>
+          <div class="text-right">
+            <p class="text-4xl font-black text-white">20 €<span class="text-lg text-slate-500 font-normal">/mois</span></p>
+            <p class="text-xs text-green-400 mt-1">✓ Tout le reste est gratuit</p>
+          </div>
+        </div>
+        <div class="bg-green-500/5 border border-green-500/15 rounded-xl p-3">
+          <p class="text-xs text-slate-400 leading-relaxed">
+            <span class="text-green-300 font-semibold">La logique freemium :</span> tous ces services ont été conçus pour que tu puisses démarrer sans sortir la carte bleue. Les limites gratuites couvrent largement les premiers centaines d'utilisateurs. Tu commences à payer seulement quand ton app génère du vrai trafic, et donc potentiellement des revenus.
+          </p>
+        </div>
+      </div>
+
+    </section>
+
+
+
+    <!-- ══════════════════════════════════════════
+         BONNES PRATIQUES
+    ══════════════════════════════════════════ -->
+    <section id="nav-pratiques" class="mb-20">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="section-label text-purple-400 uppercase font-semibold tracking-widest">Bonnes pratiques</span>
+        <div class="flex-1 h-px bg-gradient-to-r from-purple-500/30 to-transparent"></div>
+      </div>
+      <h2 class="text-3xl font-bold mb-2">Coder avec l'IA — les règles du jeu</h2>
+      <p class="text-slate-500 mb-8">La qualité de ce que Claude Code produit dépend directement de la façon dont tu lui parles, de ce que tu lui donnes comme contexte, et de comment tu gères la mémoire de vos échanges. Ces pratiques font la différence entre un résultat médiocre et un résultat excellent.</p>
+
+      <!-- Context Engineering -->
+      <div class="card p-7 mb-5">
+        <div class="accordion-toggle flex items-start gap-4 mb-5 w-full text-left" onclick="toggleAccordion(this)">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center shrink-0 text-xl">🧠</div>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold mb-1">Le Context Engineering — donner du contexte à l'IA</h3>
+            <p class="text-slate-500 text-sm">La compétence n°1 du vibe codeur en 2026</p>
+          </div>
+          <span class="chevron text-slate-500 text-lg mt-1 shrink-0">▾</span>
+        </div>
+        <div class="accordion-body">
+
+        <div class="analogy-box p-4 mb-5">
+          <p class="text-sm text-slate-300 leading-relaxed">
+            <span class="text-purple-300 font-semibold">💡 L'analogie simple :</span> imagine que tu recrutes un développeur freelance exceptionnel — mais à chaque nouvelle session, il perd toute mémoire de ce qu'il a fait avant. Si tu lui expliques juste "ajoute un bouton", il ne sait pas dans quel projet il est, quelles règles tu as, ni ce qui a déjà été fait. Si tu lui donnes un brief complet à chaque fois, il produit quelque chose de cohérent. Le context engineering, c'est l'art de ce brief.
+          </p>
+        </div>
+
+        <div class="mb-5">
+          <h4 class="text-sm font-semibold text-white mb-3">Le fichier CLAUDE.md — la mémoire persistante de ton projet</h4>
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">À la racine de tout projet, crée un fichier <code class="text-xs bg-white/10 rounded px-1.5 py-0.5">CLAUDE.md</code>. Claude Code le lit automatiquement à chaque session. C'est ton brief permanent — il y trouve tout ce dont il a besoin pour travailler de façon cohérente sans que tu répètes les mêmes choses à chaque fois.</p>
+          <div class="code-box p-4 mb-3">
+            <p class="text-xs text-slate-500 mb-2">Exemple de contenu d'un bon CLAUDE.md :</p>
+            <div class="space-y-1 text-xs">
+              <div class="text-slate-400"># Mon Projet</div>
+              <div class="text-slate-500">SaaS de gestion de coachs sportifs</div>
+              <div class="text-slate-400 mt-2"># Stack technique</div>
+              <div class="text-slate-500">Next.js 15, Supabase, Clerk, Stripe, Tailwind, shadcn/ui</div>
+              <div class="text-slate-400 mt-2"># Conventions</div>
+              <div class="text-slate-500">- Toujours TypeScript strict</div>
+              <div class="text-slate-500">- Composants dans /components, pages dans /app</div>
+              <div class="text-slate-500">- Variables d'environnement dans .env.local</div>
+              <div class="text-slate-400 mt-2"># État du projet</div>
+              <div class="text-slate-500">- Auth Clerk ✓ | Dashboard ✓ | Paiements Stripe en cours</div>
+            </div>
+          </div>
+          <div class="tip-box p-3">
+            <p class="text-xs text-green-300 font-semibold mb-1">✅ Le template claude-starter configure automatiquement ce fichier</p>
+            <p class="text-xs text-slate-400">Lance <code class="bg-white/10 rounded px-1">/agent-init</code> depuis le repo claude-starter — il te pose 5 questions et génère un CLAUDE.md complet pour ton projet.</p>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-semibold text-white mb-3">Comment structurer un bon prompt</h4>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div class="bg-red-950/20 border border-red-500/20 rounded-xl p-3">
+              <p class="text-xs font-semibold text-red-400 mb-2">❌ Prompt vague</p>
+              <p class="text-xs text-slate-400 italic">"Fais une page de dashboard"</p>
+              <p class="text-xs text-slate-600 mt-2">→ Claude invente, fait des hypothèses, produit quelque chose de générique qui ne correspond pas à ton app.</p>
+            </div>
+            <div class="bg-green-950/20 border border-green-500/20 rounded-xl p-3">
+              <p class="text-xs font-semibold text-green-400 mb-2">✅ Prompt avec contexte</p>
+              <p class="text-xs text-slate-400 italic">"Crée la page /dashboard pour les coachs connectés via Clerk. Elle doit afficher leurs 5 derniers clients depuis la table 'clients' de Supabase, avec leur nom et la date de leur dernière séance. Style shadcn/ui, dark mode."</p>
+              <p class="text-xs text-slate-600 mt-2">→ Claude sait exactement quoi faire.</p>
+            </div>
+          </div>
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4 mt-3">
+            <p class="text-xs font-semibold text-slate-300 mb-2">La recette d'un bon prompt :</p>
+            <div class="space-y-1.5 text-xs text-slate-400">
+              <div class="flex items-start gap-2"><span class="text-purple-400 shrink-0 font-bold">1.</span> <span><strong class="text-white">Quoi</strong> — ce que tu veux construire</span></div>
+              <div class="flex items-start gap-2"><span class="text-purple-400 shrink-0 font-bold">2.</span> <span><strong class="text-white">Où</strong> — le fichier, la page, la route concernée</span></div>
+              <div class="flex items-start gap-2"><span class="text-purple-400 shrink-0 font-bold">3.</span> <span><strong class="text-white">Avec quoi</strong> — les outils, tables, composants à utiliser</span></div>
+              <div class="flex items-start gap-2"><span class="text-purple-400 shrink-0 font-bold">4.</span> <span><strong class="text-white">Contraintes</strong> — style, comportement attendu, cas limites</span></div>
+            </div>
+          </div>
+        </div>
+        </div><!-- /accordion-body -->
+      </div>
+
+      <!-- Sous-agents & Skills -->
+      <div class="card p-7 mb-5">
+        <div class="accordion-toggle collapsed flex items-start gap-4 mb-5 w-full text-left" onclick="toggleAccordion(this)">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shrink-0 text-xl">🤖</div>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold mb-1">Sous-agents & Skills — déléguer et automatiser</h3>
+            <p class="text-slate-500 text-sm">Les deux outils qui transforment Claude Code en vrai copilote de projet</p>
+          </div>
+          <span class="chevron text-slate-500 text-lg mt-1 shrink-0">▾</span>
+        </div>
+        <div class="accordion-body collapsed">
+
+        <div class="analogy-box p-4 mb-6">
+          <p class="text-sm text-slate-300 leading-relaxed">
+            <span class="text-purple-300 font-semibold">💡 L'analogie simple :</span> Claude Code seul, c'est un développeur polyvalent qui fait tout. Avec les agents et les skills, c'est plutôt une agence : tu as un chef de projet (Claude) qui délègue à des spécialistes (agents) selon les besoins, et qui a des procédures internes documentées (skills) pour les tâches récurrentes.
+          </p>
+        </div>
+
+        <!-- Sous-agents -->
+        <div class="mb-6">
+          <h4 class="text-sm font-semibold text-white mb-1">Les sous-agents — des spécialistes à la demande</h4>
+          <p class="text-xs text-slate-500 mb-3">Un agent est un fichier Markdown qui donne à Claude un rôle, un périmètre, et des instructions spécifiques pour un domaine précis.</p>
+
+          <div class="grid sm:grid-cols-3 gap-3 mb-4">
+            <div class="bg-white/[0.02] border border-white/6 rounded-xl p-3">
+              <p class="text-xs font-semibold text-blue-300 mb-2">🖥️ Agent Frontend</p>
+              <p class="text-xs text-slate-400 leading-relaxed">Spécialisé React, Next.js, Tailwind, shadcn/ui. Connaît tes conventions de composants, ton système de design, les patterns d'animation.</p>
+            </div>
+            <div class="bg-white/[0.02] border border-white/6 rounded-xl p-3">
+              <p class="text-xs font-semibold text-green-300 mb-2">⚙️ Agent Backend</p>
+              <p class="text-xs text-slate-400 leading-relaxed">Spécialisé routes API, Supabase, logique métier, sécurité. Applique systématiquement les bonnes pratiques côté serveur.</p>
+            </div>
+            <div class="bg-white/[0.02] border border-white/6 rounded-xl p-3">
+              <p class="text-xs font-semibold text-orange-300 mb-2">💳 Agent Paiements</p>
+              <p class="text-xs text-slate-400 leading-relaxed">Spécialisé Stripe : webhooks, abonnements, gestion des erreurs de paiement. Évite les oublis critiques (signature webhook, etc.).</p>
+            </div>
+          </div>
+
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4 mb-3">
+            <p class="text-xs font-semibold text-white mb-2">Comment appeler un agent</p>
+            <p class="text-xs text-slate-400 leading-relaxed mb-2">Dans Claude Code, utilise le préfixe <code class="bg-white/10 rounded px-1">@</code> suivi du nom de l'agent. Claude prend alors le rôle du spécialiste avec ses règles propres :</p>
+            <div class="code-box p-3 space-y-1.5">
+              <div class="text-xs"><span class="text-slate-500">→ </span><span class="text-orange-200">@frontend</span><span class="text-slate-400"> crée le formulaire d'inscription avec validation Zod</span></div>
+              <div class="text-xs"><span class="text-slate-500">→ </span><span class="text-orange-200">@backend</span><span class="text-slate-400"> crée la route API POST /api/clients avec auth Clerk</span></div>
+              <div class="text-xs"><span class="text-slate-500">→ </span><span class="text-orange-200">@payments</span><span class="text-slate-400"> configure le webhook Stripe pour les abonnements expirés</span></div>
+            </div>
+          </div>
+
+          <div class="bg-blue-950/15 border border-blue-500/15 rounded-xl p-3">
+            <p class="text-xs text-blue-300 leading-relaxed"><span class="font-semibold">Pourquoi c'est utile ?</span> Un agent spécialisé produit un code plus cohérent et plus sûr qu'un prompt générique, parce qu'il applique toujours les mêmes règles et conventions propres à son domaine — sans que tu aies à les répéter à chaque fois.</p>
+          </div>
+        </div>
+
+        <!-- Skills -->
+        <div>
+          <h4 class="text-sm font-semibold text-white mb-1">Les skills — des commandes personnalisées</h4>
+          <p class="text-xs text-slate-500 mb-3">Un skill est une commande <code class="text-xs bg-white/10 rounded px-1">/nom</code> que tu crées toi-même pour automatiser une tâche répétitive. C'est une sorte de raccourci qui déclenche une série d'instructions prédéfinies.</p>
+
+          <div class="grid sm:grid-cols-2 gap-3 mb-4">
+            <div class="bg-white/[0.02] border border-white/6 rounded-xl p-3">
+              <p class="text-xs font-semibold text-purple-300 mb-2">Exemples de skills utiles</p>
+              <div class="space-y-2 text-xs text-slate-400">
+                <div class="flex items-start gap-2">
+                  <code class="text-orange-300 bg-black/30 rounded px-1.5 py-0.5 shrink-0">/memory-update</code>
+                  <span>Met à jour tous les fichiers mémoire du projet en une commande</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <code class="text-orange-300 bg-black/30 rounded px-1.5 py-0.5 shrink-0">/review</code>
+                  <span>Demande à Claude de relire son propre code de façon critique avant de committer</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <code class="text-orange-300 bg-black/30 rounded px-1.5 py-0.5 shrink-0">/ship</code>
+                  <span>Séquence complète : tests → lint → build → commit → push</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <code class="text-orange-300 bg-black/30 rounded px-1.5 py-0.5 shrink-0">/caveman</code>
+                  <span>Mode ultra-compressé pour économiser les tokens sur les longues sessions</span>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white/[0.02] border border-white/6 rounded-xl p-3">
+              <p class="text-xs font-semibold text-white mb-2">Comment créer un skill</p>
+              <p class="text-xs text-slate-400 leading-relaxed mb-2">Un skill est simplement un fichier <code class="bg-white/10 rounded px-1">.md</code> dans le dossier <code class="bg-white/10 rounded px-1">.claude/skills/</code>. Son nom = la commande :</p>
+              <div class="code-box p-2 text-xs text-slate-400 leading-relaxed">
+                <div class="text-slate-500">.claude/</div>
+                <div class="text-slate-500">&nbsp;&nbsp;skills/</div>
+                <div class="text-green-300">&nbsp;&nbsp;&nbsp;&nbsp;review.md → /review</div>
+                <div class="text-green-300">&nbsp;&nbsp;&nbsp;&nbsp;ship.md → /ship</div>
+                <div class="text-green-300">&nbsp;&nbsp;&nbsp;&nbsp;memory-update.md → /memory-update</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tip-box p-4">
+            <p class="text-sm text-green-300 font-semibold mb-1">✅ Les agents et skills du template claude-starter</p>
+            <p class="text-xs text-slate-400 leading-relaxed">Le repo <a href="https://github.com/PetitPelican/claude-starter" class="text-blue-400 hover:text-blue-300">claude-starter</a> contient déjà des agents prêts à l'emploi (frontend, backend, auth, paiements, ops…) et des skills essentiels (<code class="bg-white/10 rounded px-1">/memory-update</code>, <code class="bg-white/10 rounded px-1">/caveman</code>). L'agent <code class="bg-white/10 rounded px-1">/agent-init</code> sélectionne automatiquement les agents adaptés à <em>ton</em> type de projet lors de l'initialisation.</p>
+          </div>
+        </div>
+        </div><!-- /accordion-body -->
+      </div>
+
+      <!-- Tokens -->
+      <div class="card p-7 mb-5">
+        <div class="accordion-toggle collapsed flex items-start gap-4 mb-5 w-full text-left" onclick="toggleAccordion(this)">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shrink-0 text-xl">🪙</div>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold mb-1">Les tokens — comprendre la mémoire de l'IA</h3>
+            <p class="text-slate-500 text-sm">Ce que c'est, pourquoi ça compte, et comment bien les gérer</p>
+          </div>
+          <span class="chevron text-slate-500 text-lg mt-1 shrink-0">▾</span>
+        </div>
+        <div class="accordion-body collapsed">
+
+        <div class="analogy-box p-4 mb-5">
+          <p class="text-sm text-slate-300 leading-relaxed">
+            <span class="text-purple-300 font-semibold">💡 L'analogie simple :</span> un token, c'est un petit morceau de texte — environ 4 caractères ou ¾ d'un mot. Quand tu parles à Claude, tout ce que tu écris <em>et</em> tout ce qu'il te répond consomme des tokens. La limite de tokens qu'une IA peut traiter en une seule conversation s'appelle la <strong class="text-white">fenêtre de contexte</strong> (context window). C'est comme une table de travail : plus tu y empiles de choses, moins tu as de place pour en ajouter.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4 mb-5">
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4">
+            <h4 class="text-sm font-semibold text-white mb-2">📏 Tailles de référence</h4>
+            <div class="space-y-2 text-xs text-slate-400">
+              <div class="flex justify-between"><span>1 token</span><span class="text-slate-500">≈ 4 caractères</span></div>
+              <div class="flex justify-between"><span>750 mots</span><span class="text-slate-500">≈ 1 000 tokens</span></div>
+              <div class="flex justify-between"><span>Un fichier de code moyen</span><span class="text-slate-500">≈ 500–2 000 tokens</span></div>
+              <div class="flex justify-between"><span>Context window Claude</span><span class="text-slate-500">≈ 200 000 tokens</span></div>
+            </div>
+          </div>
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4">
+            <h4 class="text-sm font-semibold text-white mb-2">⚠️ Quand ça pose problème</h4>
+            <div class="space-y-2 text-xs text-slate-400">
+              <div class="flex items-start gap-2"><span class="text-amber-400 shrink-0">→</span> En fin de longue session, Claude "oublie" les premières instructions</div>
+              <div class="flex items-start gap-2"><span class="text-amber-400 shrink-0">→</span> Les fichiers trop gros ralentissent les réponses et coûtent plus en tokens</div>
+              <div class="flex items-start gap-2"><span class="text-amber-400 shrink-0">→</span> Copier tout le codebase dans un prompt est une mauvaise idée</div>
+            </div>
+          </div>
+        </div>
+
+        <h4 class="text-sm font-semibold text-white mb-3">Les bonnes pratiques pour gérer les tokens</h4>
+        <div class="space-y-3">
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-3">
+            <div class="flex items-start gap-3">
+              <code class="text-xs text-orange-300 bg-black/30 rounded px-2 py-1 shrink-0">/clear</code>
+              <div>
+                <p class="text-xs font-semibold text-white mb-1">Réinitialiser la conversation régulièrement</p>
+                <p class="text-xs text-slate-400">Après chaque tâche terminée, tape <code class="bg-white/10 rounded px-1">/clear</code> dans Claude Code pour repartir sur une conversation propre. Une longue conversation non réinitialisée dégrade progressivement la qualité des réponses — Claude "pollue" son propre contexte avec les échanges précédents.</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-3">
+            <p class="text-xs font-semibold text-white mb-1">🎯 Une tâche à la fois</p>
+            <p class="text-xs text-slate-400">Ne demande pas "crée toute mon app". Découpe en tâches atomiques : une feature = une conversation = un commit. Tu gardes le contrôle, les tokens restent maîtrisés, et si ça part dans le mauvais sens, le rollback est simple.</p>
+          </div>
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-3">
+            <p class="text-xs font-semibold text-white mb-1">📄 Ne partage que ce qui est nécessaire</p>
+            <p class="text-xs text-slate-400">Claude Code lit lui-même les fichiers pertinents — pas besoin de tout copier-coller dans le chat. Dis-lui plutôt : <span class="text-orange-200 italic">"regarde le fichier app/dashboard/page.tsx et modifie..."</span> Il sait où chercher.</p>
+          </div>
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-3">
+            <p class="text-xs font-semibold text-white mb-1">💾 Utilise /memory-update régulièrement</p>
+            <p class="text-xs text-slate-400">Si tu utilises le template claude-starter, lance <code class="bg-white/10 rounded px-1">/memory-update</code> en fin de session. Claude met à jour les fichiers mémoire du projet — la prochaine session repart avec un contexte frais mais complet, sans accumuler de tokens inutiles.</p>
+          </div>
+        </div>
+        </div><!-- /accordion-body -->
+      </div>
+
+      <!-- Autres bonnes pratiques -->
+      <div class="card p-7">
+        <div class="accordion-toggle collapsed flex items-start gap-4 mb-5 w-full text-left" onclick="toggleAccordion(this)">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center shrink-0 text-xl">⚙️</div>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold mb-1">Les autres réflexes à adopter</h3>
+            <p class="text-slate-500 text-sm">Ce que font les vibe codeurs qui s'en sortent le mieux</p>
+          </div>
+          <span class="chevron text-slate-500 text-lg mt-1 shrink-0">▾</span>
+        </div>
+        <div class="accordion-body collapsed">
+
+        <div class="space-y-3">
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4">
+            <p class="text-sm font-semibold text-white mb-1">📐 Définir le data model avant de coder</p>
+            <p class="text-xs text-slate-400 leading-relaxed">Avant de lancer Claude sur une feature, prends 5 minutes pour définir les données : quelles tables dans Supabase, quels champs, quelles relations. Décris ça dans ton prompt ou dans CLAUDE.md. L'IA produit un code bien plus cohérent quand elle sait exactement comment les données sont structurées.</p>
+          </div>
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4">
+            <p class="text-sm font-semibold text-white mb-1">🔍 Utiliser /plan avant les grosses features</p>
+            <p class="text-xs text-slate-400 leading-relaxed">Pour une feature complexe, commence par <code class="bg-white/10 rounded px-1">/plan</code>. Claude te montre son plan d'action avant de toucher au code — tu peux corriger la direction avant qu'il parte dans le mauvais sens et que tu perdes du temps à défaire.</p>
+          </div>
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4">
+            <p class="text-sm font-semibold text-white mb-1">💾 Commit après chaque feature terminée</p>
+            <p class="text-xs text-slate-400 leading-relaxed">À chaque fois qu'une feature fonctionne, fais un commit avec un message descriptif. Si la prochaine tentative casse quelque chose, tu peux revenir exactement à l'état où ça marchait. Sans Git, le moindre bug peut te forcer à tout réécrire.</p>
+          </div>
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4">
+            <p class="text-sm font-semibold text-white mb-1">👁️ Toujours relire ce que Claude a écrit</p>
+            <p class="text-xs text-slate-400 leading-relaxed">Claude Code peut se tromper, surtout sur les zones sensibles (auth, paiements, données utilisateurs). Ne déploie jamais sans avoir regardé les changements dans VS Code. L'outil <code class="bg-white/10 rounded px-1">/review</code> demande à Claude de relire lui-même son code de façon critique avant de l'envoyer.</p>
+          </div>
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4">
+            <p class="text-sm font-semibold text-white mb-1">🔢 Travailler par étapes séquentielles</p>
+            <p class="text-xs text-slate-400 leading-relaxed">Ne demande pas tout en une fois. L'IA produit mieux quand les tâches sont séquentielles et bien délimitées : <span class="text-orange-200 italic">"D'abord, crée la table Supabase. Ensuite, crée le formulaire. Ensuite, connecte les deux."</span> Chaque étape validée avant de passer à la suivante.</p>
+          </div>
+        </div>
+        </div><!-- /accordion-body -->
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         SÉCURITÉ
+    ══════════════════════════════════════════ -->
+    <section id="nav-securite" class="mb-20">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="section-label text-red-400 uppercase font-semibold tracking-widest">Sécurité</span>
+        <div class="flex-1 h-px bg-gradient-to-r from-red-500/30 to-transparent"></div>
+      </div>
+      <h2 class="text-3xl font-bold mb-2">Ne pas tout casser en une nuit</h2>
+      <p class="text-slate-500 mb-3">45% du code généré par IA contient des vulnérabilités selon les études 2026. Pas parce que l'IA est mauvaise — mais parce que personne ne lui dit de faire attention à la sécurité. Ces règles simples protègent ton app, tes utilisateurs, et ton compte bancaire.</p>
+      <div class="bg-red-950/20 border border-red-500/20 rounded-xl p-4 mb-8">
+        <p class="text-xs text-red-300 leading-relaxed"><span class="font-semibold">⚠️ Rappel important :</span> Claude Code est très bon pour écrire des features. Il est moins fiable pour auditer la sécurité de façon proactive. Ces points doivent être <strong>vérifiés par toi</strong> avant chaque déploiement en production.</p>
+      </div>
+
+      <!-- .env -->
+      <div class="card p-7 mb-5">
+        <div class="accordion-toggle collapsed flex items-start gap-4 mb-5 w-full text-left" onclick="toggleAccordion(this)">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-rose-700 flex items-center justify-center shrink-0 font-mono text-sm font-bold text-white">.env</div>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold mb-1">Le fichier .env — tes clés secrètes</h3>
+            <p class="text-slate-500 text-sm">Le fichier le plus important à ne jamais exposer</p>
+          </div>
+          <span class="chevron text-slate-500 text-lg mt-1 shrink-0">▾</span>
+        </div>
+        <div class="accordion-body collapsed">
+        <div class="analogy-box p-4 mb-5">
+          <p class="text-sm text-slate-300 leading-relaxed">
+            <span class="text-purple-300 font-semibold">💡 L'analogie simple :</span> les clés API (Supabase, Stripe, Clerk, Resend…) sont comme les clés de ta maison. Le fichier <code class="text-xs bg-white/10 rounded px-1">.env</code> est le trousseau où tu les stockes. Si tu pousses ce fichier sur GitHub, n'importe qui dans le monde peut voir toutes tes clés, accéder à ta base de données, vider ton compte Stripe, envoyer des emails à ta place. C'est la fuite de données la plus courante chez les vibe codeurs débutants.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4 mb-5">
+          <div>
+            <h4 class="text-sm font-semibold text-white mb-3">Ce que contient un .env typique</h4>
+            <div class="code-box p-3 space-y-1">
+              <div class="text-xs text-slate-500"># Supabase</div>
+              <div class="text-xs text-green-300">NEXT_PUBLIC_SUPABASE_URL=https://...</div>
+              <div class="text-xs text-green-300">SUPABASE_SERVICE_ROLE_KEY=eyJ...</div>
+              <div class="text-xs text-slate-500 mt-2"># Clerk</div>
+              <div class="text-xs text-green-300">CLERK_SECRET_KEY=sk_live_...</div>
+              <div class="text-xs text-slate-500 mt-2"># Stripe</div>
+              <div class="text-xs text-green-300">STRIPE_SECRET_KEY=sk_live_...</div>
+              <div class="text-xs text-slate-500 mt-2"># Resend</div>
+              <div class="text-xs text-green-300">RESEND_API_KEY=re_...</div>
+            </div>
+          </div>
+          <div class="space-y-3">
+            <div class="bg-red-950/20 border border-red-500/20 rounded-xl p-3">
+              <p class="text-xs font-semibold text-red-400 mb-1">❌ Ne jamais faire</p>
+              <div class="space-y-1 text-xs text-slate-400">
+                <div class="flex items-start gap-2"><span class="text-red-400 shrink-0">→</span> Committer le fichier .env sur GitHub</div>
+                <div class="flex items-start gap-2"><span class="text-red-400 shrink-0">→</span> Coller une clé API directement dans le code</div>
+                <div class="flex items-start gap-2"><span class="text-red-400 shrink-0">→</span> Partager son .env dans un prompt Claude</div>
+                <div class="flex items-start gap-2"><span class="text-red-400 shrink-0">→</span> Utiliser ses clés de production en local</div>
+              </div>
+            </div>
+            <div class="tip-box p-3">
+              <p class="text-xs text-green-300 font-semibold mb-1">✅ La règle absolue</p>
+              <p class="text-xs text-slate-400">Tous les services (Supabase, Stripe, Clerk…) ont des clés <strong class="text-white">test</strong> et des clés <strong class="text-white">production</strong>. En développement local, utilise toujours les clés test. Les clés production uniquement dans le dashboard Vercel.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4">
+          <h4 class="text-sm font-semibold text-white mb-3">Le fichier .gitignore — le filet de sécurité</h4>
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">Le fichier <code class="text-xs bg-white/10 rounded px-1">.gitignore</code> dit à Git quels fichiers ne jamais envoyer sur GitHub. Vérifie qu'il contient au minimum ces lignes — Claude Code le crée automatiquement, mais vaut mieux vérifier :</p>
+          <div class="code-box p-3">
+            <div class="space-y-0.5 text-xs">
+              <div class="text-green-300">.env</div>
+              <div class="text-green-300">.env.local</div>
+              <div class="text-green-300">.env*.local</div>
+              <div class="text-green-300">.mcp.json</div>
+              <div class="text-slate-500"># dossiers générés automatiquement</div>
+              <div class="text-green-300">node_modules/</div>
+              <div class="text-green-300">.next/</div>
+            </div>
+          </div>
+        </div>
+        </div><!-- /accordion-body -->
+      </div>
+
+      <!-- .mcp.json -->
+      <div class="card p-7 mb-5">
+        <div class="accordion-toggle collapsed flex items-start gap-4 mb-5 w-full text-left" onclick="toggleAccordion(this)">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-slate-600 to-slate-800 flex items-center justify-center shrink-0 font-mono text-xs font-bold text-slate-300 border border-white/10">.mcp</div>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold mb-1">Le fichier .mcp.json — la config des outils IA</h3>
+            <p class="text-slate-500 text-sm">Jamais sur GitHub non plus</p>
+          </div>
+          <span class="chevron text-slate-500 text-lg mt-1 shrink-0">▾</span>
+        </div>
+        <div class="accordion-body collapsed">
+
+        <p class="text-sm text-slate-400 leading-relaxed mb-4">Le fichier <code class="text-xs bg-white/10 rounded px-1">.mcp.json</code> configure les <strong class="text-white">serveurs MCP</strong> (Model Context Protocol) — les connexions que Claude Code utilise pour interagir directement avec tes services (Supabase, GitHub, Stripe…). Il contient des tokens d'accès et des configurations sensibles.</p>
+
+        <div class="analogy-box p-4 mb-4">
+          <p class="text-sm text-slate-300 leading-relaxed">
+            <span class="text-purple-300 font-semibold">💡 C'est quoi MCP ?</span> Les serveurs MCP sont des "extensions" qui donnent à Claude Code des super-pouvoirs : lire directement ta base Supabase, créer des issues GitHub, accéder à ton compte Stripe. C'est très puissant — et donc très sensible. Les tokens dans ce fichier donnent un accès réel à tes services.
+          </p>
+        </div>
+
+        <div class="bg-red-950/15 border border-red-500/15 rounded-xl p-3 mb-4">
+          <p class="text-xs text-red-300"><span class="font-semibold">Règle :</span> <code class="bg-white/10 rounded px-1">.mcp.json</code> doit être dans ton <code class="bg-white/10 rounded px-1">.gitignore</code>. Partage le fichier <code class="bg-white/10 rounded px-1">.mcp.json.example</code> (avec des valeurs vides) sur GitHub — jamais le vrai fichier avec tes tokens.</p>
+        </div>
+
+        <div class="code-box p-4">
+          <p class="text-xs text-slate-500 mb-2">Exemple de .mcp.json.example à partager (valeurs vides) :</p>
+          <div class="text-xs space-y-0.5">
+            <div class="text-slate-400">{"mcpServers": {"supabase": {"command": "npx",</div>
+            <div class="text-slate-400">&nbsp;&nbsp;"args": ["@supabase/mcp-server-supabase"],</div>
+            <div class="text-green-300">&nbsp;&nbsp;"env": {"SUPABASE_URL": "TON_URL_ICI",</div>
+            <div class="text-green-300">&nbsp;&nbsp;&nbsp;&nbsp;"SUPABASE_SERVICE_ROLE_KEY": "TA_CLE_ICI"}}}}</div>
+          </div>
+        </div>
+        </div><!-- /accordion-body -->
+      </div>
+
+      <!-- Sécurité Supabase -->
+      <div class="card p-7 mb-5">
+        <div class="accordion-toggle collapsed flex items-start gap-4 mb-5 w-full text-left" onclick="toggleAccordion(this)">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-green-700 flex items-center justify-center shrink-0 text-xl">🛡️</div>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold mb-1">Sécuriser ta base de données Supabase</h3>
+            <p class="text-slate-500 text-sm">Le point le plus souvent oublié par les vibe codeurs</p>
+          </div>
+          <span class="chevron text-slate-500 text-lg mt-1 shrink-0">▾</span>
+        </div>
+        <div class="accordion-body collapsed">
+        <div class="analogy-box p-4 mb-5">
+          <p class="text-sm text-slate-300 leading-relaxed">
+            <span class="text-purple-300 font-semibold">💡 L'analogie simple :</span> par défaut, une table Supabase est accessible à tous les utilisateurs connectés — comme un immeuble où toutes les portes sont ouvertes à quiconque a un badge d'entrée. Le <strong class="text-white">RLS (Row Level Security)</strong> est le système qui dit "chaque locataire ne peut ouvrir que sa propre porte". Sans RLS, un utilisateur connecté peut potentiellement lire les données de tous les autres.
+          </p>
+        </div>
+
+        <div class="space-y-3 mb-5">
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4">
+            <p class="text-sm font-semibold text-white mb-2">🔒 Activer le RLS sur toutes tes tables</p>
+            <p class="text-xs text-slate-400 leading-relaxed mb-2">Dans le dashboard Supabase → Authentication → Policies : active le Row Level Security sur chaque table qui contient des données utilisateurs. Ensuite demande à Claude Code de générer les politiques adaptées à ton cas.</p>
+            <div class="code-box p-2.5">
+              <p class="text-xs text-orange-200 italic">"Active le RLS sur la table 'clients' et crée une politique pour que chaque coach ne voie que ses propres clients"</p>
+            </div>
+          </div>
+          <div class="bg-white/[0.02] border border-white/6 rounded-xl p-4">
+            <p class="text-sm font-semibold text-white mb-2">🔑 Utiliser la bonne clé Supabase selon le contexte</p>
+            <div class="grid sm:grid-cols-2 gap-2 text-xs">
+              <div class="bg-green-950/20 border border-green-500/15 rounded-lg p-2.5">
+                <p class="text-green-400 font-semibold mb-1">NEXT_PUBLIC_SUPABASE_ANON_KEY</p>
+                <p class="text-slate-400">Clé publique — utilisée côté navigateur (composants React). Respecte le RLS. C'est normal qu'elle soit visible.</p>
+              </div>
+              <div class="bg-red-950/20 border border-red-500/15 rounded-lg p-2.5">
+                <p class="text-red-400 font-semibold mb-1">SUPABASE_SERVICE_ROLE_KEY</p>
+                <p class="text-slate-400">Clé admin — uniquement côté serveur (routes API). Contourne le RLS. Ne jamais l'exposer côté client.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div><!-- /accordion-body -->
+      </div>
+
+      <!-- Checklist sécurité -->
+      <div class="card p-7">
+        <div class="accordion-toggle collapsed flex items-start gap-4 mb-5 w-full text-left" onclick="toggleAccordion(this)">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-600 to-red-600 flex items-center justify-center shrink-0 text-xl">✅</div>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold mb-1">Checklist avant de déployer en production</h3>
+            <p class="text-slate-500 text-sm">À vérifier manuellement — ne délègue pas ça à l'IA</p>
+          </div>
+          <span class="chevron text-slate-500 text-lg mt-1 shrink-0">▾</span>
+        </div>
+        <div class="accordion-body collapsed">
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="space-y-2">
+            <p class="text-xs font-semibold text-slate-300 uppercase tracking-wide mb-3">Variables & Secrets</p>
+            <label class="flex items-start gap-2.5 text-xs text-slate-400 cursor-pointer group">
+              <input type="checkbox" class="mt-0.5 rounded accent-purple-500 shrink-0" />
+              <span><code class="bg-white/10 rounded px-1">.env</code> et <code class="bg-white/10 rounded px-1">.mcp.json</code> sont dans le .gitignore</span>
+            </label>
+            <label class="flex items-start gap-2.5 text-xs text-slate-400 cursor-pointer">
+              <input type="checkbox" class="mt-0.5 rounded accent-purple-500 shrink-0" />
+              <span>Aucune clé API dans le code — tout est en variable d'environnement</span>
+            </label>
+            <label class="flex items-start gap-2.5 text-xs text-slate-400 cursor-pointer">
+              <input type="checkbox" class="mt-0.5 rounded accent-purple-500 shrink-0" />
+              <span>Les clés de production sont dans le dashboard Vercel (pas les clés test)</span>
+            </label>
+            <label class="flex items-start gap-2.5 text-xs text-slate-400 cursor-pointer">
+              <input type="checkbox" class="mt-0.5 rounded accent-purple-500 shrink-0" />
+              <span><code class="bg-white/10 rounded px-1">SUPABASE_SERVICE_ROLE_KEY</code> uniquement dans les routes API serveur</span>
+            </label>
+          </div>
+          <div class="space-y-2">
+            <p class="text-xs font-semibold text-slate-300 uppercase tracking-wide mb-3">Base de données & Auth</p>
+            <label class="flex items-start gap-2.5 text-xs text-slate-400 cursor-pointer">
+              <input type="checkbox" class="mt-0.5 rounded accent-purple-500 shrink-0" />
+              <span>RLS activé sur toutes les tables Supabase avec des données utilisateurs</span>
+            </label>
+            <label class="flex items-start gap-2.5 text-xs text-slate-400 cursor-pointer">
+              <input type="checkbox" class="mt-0.5 rounded accent-purple-500 shrink-0" />
+              <span>Les routes API protégées vérifient que l'utilisateur est connecté (Clerk)</span>
+            </label>
+            <label class="flex items-start gap-2.5 text-xs text-slate-400 cursor-pointer">
+              <input type="checkbox" class="mt-0.5 rounded accent-purple-500 shrink-0" />
+              <span>Les webhooks Stripe vérifient la signature de chaque requête</span>
+            </label>
+            <label class="flex items-start gap-2.5 text-xs text-slate-400 cursor-pointer">
+              <input type="checkbox" class="mt-0.5 rounded accent-purple-500 shrink-0" />
+              <span>Sentry est installé — tu seras alerté si quelque chose casse</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="bg-amber-950/20 border border-amber-500/20 rounded-xl p-4 mt-5">
+          <p class="text-xs text-amber-300 leading-relaxed"><span class="font-semibold">💡 Astuce :</span> demande à Claude Code de faire un audit de sécurité de ton projet avant de déployer — <span class="italic text-orange-200">"Fais un audit de sécurité de mon projet : vérifie les clés API, le RLS Supabase, les routes API protégées, et les webhooks Stripe"</span>. Ce n'est pas infaillible, mais ça détecte les oublis évidents.</p>
+        </div>
+        </div><!-- /accordion-body -->
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         FOOTER
+    ══════════════════════════════════════════ -->
+    <footer class="text-center pt-10 border-t border-white/8">
+      <p class="text-2xl font-bold mb-3">Tu n'as pas besoin de tout comprendre.</p>
+      <p class="text-slate-400 text-base max-w-lg mx-auto leading-relaxed mb-6">
+        Le vibe coding, c'est savoir <em>quoi demander</em> et <em>à quel outil</em>. Claude Code fait le reste. Commence petit, ship vite, apprends en faisant.
+      </p>
+      <p class="text-slate-700 text-xs">Guide du Vibe Codeur · Stack 2026</p>
+    </footer>
+
+  </div>
+
+  <script>
+    function toggleAccordion(toggle) {
+      const body = toggle.nextElementSibling;
+      if (!body || !body.classList.contains('accordion-body')) return;
+      const isCollapsed = body.classList.contains('collapsed');
+      body.classList.toggle('collapsed', !isCollapsed);
+      toggle.classList.toggle('collapsed', !isCollapsed);
+    }
+
+    // Sommaire flottant — suivi du scroll
+    (function () {
+      const ids = ['nav-demarrer','nav-vscode','nav-github','nav-frontend','nav-backend','nav-stripe','nav-services','nav-recap','nav-pratiques','nav-securite'];
+      const items = {};
+      ids.forEach(id => {
+        items[id] = document.querySelector(`[data-target="${id}"]`);
+      });
+
+      function setActive(id) {
+        Object.values(items).forEach(a => a && a.classList.remove('active'));
+        if (items[id]) items[id].classList.add('active');
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id); });
+      }, { rootMargin: '-15% 0px -65% 0px' });
+
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
+      });
+
+      const sideNav = document.getElementById('side-nav');
+      const header = document.querySelector('header');
+      const navObserver = new IntersectionObserver(([e]) => {
+        sideNav.style.opacity = e.isIntersecting ? '0' : '1';
+      }, { threshold: 0.1 });
+      if (header) navObserver.observe(header);
+    })();
+
+  </script>
+
+</body>
+</html>
