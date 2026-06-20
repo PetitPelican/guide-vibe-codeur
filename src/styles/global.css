@@ -4,7 +4,7 @@
 
 * { font-family: 'Inter', sans-serif; }
 code, .mono { font-family: 'JetBrains Mono', monospace; }
-html { background-color: #080e1c; max-width: 100%; overflow-x: hidden; }
+html { background-color: #080e1c; max-width: 100%; overflow-x: hidden; scroll-behavior: smooth; }
 body { max-width: 100%; overflow-x: hidden; }
 
 .gradient-bg {
