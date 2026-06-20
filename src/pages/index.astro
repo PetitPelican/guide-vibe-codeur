@@ -185,11 +185,11 @@ import Layout from '../layouts/Layout.astro';
 
       <!-- VS Code -->
       <div class="card p-7 mb-5">
-        <div class="flex items-start gap-5 mb-5">
+        <div class="accordion-toggle flex items-start gap-5 mb-5 w-full text-left cursor-pointer" onclick="toggleAccordion(this)">
           <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center shrink-0 shadow-lg">
             <svg viewBox="0 0 24 24" class="w-8 h-8 fill-white"><path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.261A1 1 0 0 0 .326 8.74L3.899 12 .326 15.26a1 1 0 0 0 .001 1.479L1.65 17.94a.999.999 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.492 1.492 0 0 0 1.704.29l4.942-2.377A1.5 1.5 0 0 0 24 20.06V3.939a1.5 1.5 0 0 0-.85-1.352zm-5.146 14.861L10.826 12l7.178-5.448v10.896z"/></svg>
           </div>
-          <div>
+          <div class="flex-1">
             <div class="flex flex-wrap items-center gap-2 mb-1">
               <h3 class="text-2xl font-bold">VS Code</h3>
               <span class="tag bg-blue-500/15 text-blue-300 border border-blue-500/20 rounded-md px-2 py-0.5">L'éditeur de code</span>
@@ -198,7 +198,10 @@ import Layout from '../layouts/Layout.astro';
             </div>
             <p class="text-slate-500 text-sm">Développé par Microsoft · Utilisé par ~70% des développeurs mondiaux</p>
           </div>
+        
+          <span class="chevron text-slate-500 text-lg mt-1 shrink-0">▾</span>
         </div>
+        <div class="accordion-body">
 
         <div class="analogy-box p-4 mb-5">
           <p class="text-sm text-slate-300 leading-relaxed">
@@ -262,13 +265,14 @@ import Layout from '../layouts/Layout.astro';
           <p class="text-sm text-green-300 font-semibold mb-1">✅ Pour démarrer</p>
           <p class="text-xs text-slate-400 leading-relaxed">Télécharge VS Code gratuitement sur <span class="text-blue-400">code.visualstudio.com</span>. Installe l'extension "Claude Code" depuis le marketplace. C'est tout ce qu'il te faut pour commencer à vibe coder.</p>
         </div>
-      </div>
+              </div>
+</div>
 
       <!-- Claude Code -->
       <div class="card p-7">
-        <div class="flex items-start gap-5 mb-5">
+        <div class="accordion-toggle flex items-start gap-5 mb-5 w-full text-left cursor-pointer" onclick="toggleAccordion(this)">
           <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-500 to-pink-600 flex items-center justify-center shrink-0 shadow-lg text-2xl font-black">C</div>
-          <div>
+          <div class="flex-1">
             <div class="flex flex-wrap items-center gap-2 mb-1">
               <h3 class="text-2xl font-bold">Claude Code</h3>
               <span class="tag bg-orange-500/15 text-orange-300 border border-orange-500/20 rounded-md px-2 py-0.5">L'assistant IA</span>
@@ -278,7 +282,10 @@ import Layout from '../layouts/Layout.astro';
             </div>
             <p class="text-slate-500 text-sm">L'IA qui comprend ton projet entier et code à ta place</p>
           </div>
+        
+          <span class="chevron text-slate-500 text-lg mt-1 shrink-0">▾</span>
         </div>
+        <div class="accordion-body">
 
         <div class="analogy-box p-4 mb-5">
           <p class="text-sm text-slate-300 leading-relaxed">
@@ -360,7 +367,8 @@ import Layout from '../layouts/Layout.astro';
           <p class="text-sm text-green-300 font-semibold mb-1">✅ Le secret du vibe coding</p>
           <p class="text-xs text-slate-400 leading-relaxed">Plus tu décris précisément ce que tu veux (le contexte, l'objectif, les contraintes), meilleur sera le résultat. Traite Claude Code comme un collègue très compétent à qui tu délègues une tâche — pas comme une machine à qui tu donnes des instructions techniques.</p>
         </div>
-      </div>
+              </div>
+</div>
     </section>
 
     <!-- ══════════════════════════════════════════
@@ -376,9 +384,9 @@ import Layout from '../layouts/Layout.astro';
 
       <!-- Git vs GitHub -->
       <div class="card p-7 mb-5">
-        <div class="flex items-start gap-5 mb-5">
+        <div class="accordion-toggle flex items-start gap-5 mb-5 w-full text-left cursor-pointer" onclick="toggleAccordion(this)">
           <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-600 to-red-700 flex items-center justify-center shrink-0 text-3xl">🌿</div>
-          <div>
+          <div class="flex-1">
             <div class="flex flex-wrap items-center gap-2 mb-1">
               <h3 class="text-2xl font-bold">Git &amp; GitHub</h3>
               <span class="tag bg-orange-500/15 text-orange-300 border border-orange-500/20 rounded-md px-2 py-0.5">Versioning</span>
@@ -387,7 +395,10 @@ import Layout from '../layouts/Layout.astro';
             </div>
             <p class="text-slate-500 text-sm">Ton historique de projet, ta sauvegarde, et ta collaboration — tout en un</p>
           </div>
+        
+          <span class="chevron text-slate-500 text-lg mt-1 shrink-0">▾</span>
         </div>
+        <div class="accordion-body">
 
         <div class="analogy-box p-4 mb-6">
           <p class="text-sm text-slate-300 leading-relaxed mb-3">
@@ -539,13 +550,14 @@ import Layout from '../layouts/Layout.astro';
           <p class="text-sm text-green-300 font-semibold mb-1">✅ Pour démarrer</p>
           <p class="text-xs text-slate-400 leading-relaxed">Crée un compte gratuit sur <span class="text-blue-400">github.com</span>. Ensuite, crée un nouveau "repository" (dépôt) — c'est le nom d'un projet sur GitHub. Connecte-le à VS Code, et dès ton premier commit/push, ton projet est sauvegardé dans le cloud. GitHub Desktop (application gratuite) simplifie encore plus l'interface si le terminal t'intimide.</p>
         </div>
-      </div>
+              </div>
+</div>
 
       <!-- claude-starter -->
       <div class="card p-7" style="border-color: rgba(139,92,246,0.3); background: linear-gradient(135deg, rgba(139,92,246,0.05), rgba(59,130,246,0.03));">
-        <div class="flex items-start gap-5 mb-5">
+        <div class="accordion-toggle flex items-start gap-5 mb-5 w-full text-left cursor-pointer" onclick="toggleAccordion(this)">
           <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center shrink-0 shadow-lg text-2xl">🚀</div>
-          <div>
+          <div class="flex-1">
             <div class="flex flex-wrap items-center gap-2 mb-1">
               <h3 class="text-2xl font-bold">claude-starter</h3>
               <span class="tag bg-purple-500/20 text-purple-300 border border-purple-500/30 rounded-md px-2 py-0.5">Template GitHub</span>
@@ -557,7 +569,10 @@ import Layout from '../layouts/Layout.astro';
               github.com/PetitPelican/claude-starter
             </a>
           </div>
+        
+          <span class="chevron text-slate-500 text-lg mt-1 shrink-0">▾</span>
         </div>
+        <div class="accordion-body">
 
         <div class="analogy-box p-4 mb-5">
           <p class="text-sm text-slate-300 leading-relaxed">
@@ -654,7 +669,8 @@ import Layout from '../layouts/Layout.astro';
           <p class="text-sm text-green-300 font-semibold mb-1">✅ Pourquoi utiliser ce template ?</p>
           <p class="text-xs text-slate-400 leading-relaxed">Sans configuration, Claude Code répond de façon générique. Avec ce template, il connaît ton projet, ton stack, tes conventions, et l'état d'avancement de chaque feature. Résultat : des réponses bien plus précises et pertinentes dès la première question.</p>
         </div>
-      </div>
+              </div>
+</div>
     </section>
 
     <!-- ══════════════════════════════════════════
@@ -670,11 +686,11 @@ import Layout from '../layouts/Layout.astro';
 
       <!-- Vercel -->
       <div class="card p-7 mb-5">
-        <div class="flex items-start gap-5 mb-5">
+        <div class="accordion-toggle flex items-start gap-5 mb-5 w-full text-left cursor-pointer" onclick="toggleAccordion(this)">
           <div class="w-14 h-14 rounded-2xl bg-black border border-white/20 flex items-center justify-center shrink-0">
             <svg viewBox="0 0 24 24" class="w-8 h-8 fill-white"><path d="M24 22.525H0l12-21.05 12 21.05z"/></svg>
           </div>
-          <div>
+          <div class="flex-1">
             <div class="flex flex-wrap items-center gap-2 mb-1">
               <h3 class="text-2xl font-bold">Vercel</h3>
               <span class="tag bg-slate-700/40 text-slate-300 border border-slate-600/20 rounded-md px-2 py-0.5">Hébergement & Déploiement</span>
@@ -683,7 +699,10 @@ import Layout from '../layouts/Layout.astro';
             </div>
             <p class="text-slate-500 text-sm">Ton code sur GitHub → visible sur internet en 30 secondes</p>
           </div>
+        
+          <span class="chevron text-slate-500 text-lg mt-1 shrink-0">▾</span>
         </div>
+        <div class="accordion-body">
 
         <div class="analogy-box p-4 mb-5">
           <p class="text-sm text-slate-300 leading-relaxed">
@@ -752,15 +771,16 @@ import Layout from '../layouts/Layout.astro';
           <p class="text-sm text-green-300 font-semibold mb-1">✅ En pratique</p>
           <p class="text-xs text-slate-400 leading-relaxed">Crée un compte gratuit sur <span class="text-blue-400">vercel.com</span>, clique sur "Import Project", sélectionne ton repo GitHub — c'est en ligne. v0.dev est accessible sur <span class="text-blue-400">v0.dev</span> avec le même compte. Ajoute tes variables d'environnement dans les réglages du projet sur le dashboard Vercel.</p>
         </div>
-      </div>
+              </div>
+</div>
 
       <!-- Next.js -->
       <div class="card p-7 mb-5">
-        <div class="flex items-start gap-5 mb-5">
+        <div class="accordion-toggle flex items-start gap-5 mb-5 w-full text-left cursor-pointer" onclick="toggleAccordion(this)">
           <div class="w-14 h-14 rounded-2xl bg-black border border-white/20 flex items-center justify-center shrink-0">
             <svg viewBox="0 0 24 24" class="w-8 h-8 fill-white"><path d="M11.572 0c-.176 0-.31.001-.358.007a19.76 19.76 0 0 1-.364.033C7.443.346 4.25 2.185 2.228 5.012a11.875 11.875 0 0 0-2.119 5.243c-.096.659-.108.854-.108 1.747s.012 1.089.108 1.748c.652 4.506 3.86 8.292 8.209 9.695.779.25 1.6.422 2.534.525.363.04 1.935.04 2.299 0 1.611-.178 2.977-.577 4.323-1.264.207-.106.247-.134.219-.158-.02-.013-.9-1.193-1.955-2.62l-1.919-2.592-2.404-3.558a338.739 338.739 0 0 0-2.422-3.556c-.009-.002-.018 1.579-.023 3.51-.007 3.38-.01 3.515-.052 3.595a.426.426 0 0 1-.206.214c-.075.037-.14.044-.495.044H7.81l-.108-.068a.438.438 0 0 1-.157-.171l-.05-.106.006-4.703.007-4.705.072-.092a.645.645 0 0 1 .174-.143c.096-.047.134-.051.54-.051.478 0 .558.018.682.154.035.038 1.337 1.999 2.895 4.361a10760.433 10760.433 0 0 0 4.735 7.17l1.9 2.879.096-.063a12.317 12.317 0 0 0 2.466-2.163 11.944 11.944 0 0 0 2.824-6.134c.096-.66.108-.854.108-1.748 0-.893-.012-1.088-.108-1.747-.652-4.506-3.859-8.292-8.208-9.695a12.597 12.597 0 0 0-2.499-.523A33.119 33.119 0 0 0 11.573 0z"/></svg>
           </div>
-          <div>
+          <div class="flex-1">
             <div class="flex flex-wrap items-center gap-2 mb-1">
               <h3 class="text-2xl font-bold">Next.js + Tailwind</h3>
               <span class="tag bg-slate-700/40 text-slate-300 border border-slate-600/20 rounded-md px-2 py-0.5">Le socle de ton app</span>
@@ -768,7 +788,10 @@ import Layout from '../layouts/Layout.astro';
             </div>
             <p class="text-slate-500 text-sm">Le framework frontend le plus populaire du moment</p>
           </div>
+        
+          <span class="chevron text-slate-500 text-lg mt-1 shrink-0">▾</span>
         </div>
+        <div class="accordion-body">
 
         <div class="analogy-box p-4 mb-5">
           <p class="text-sm text-slate-300 leading-relaxed">
@@ -801,7 +824,8 @@ import Layout from '../layouts/Layout.astro';
           <p class="text-sm text-green-300 font-semibold mb-1">✅ En pratique</p>
           <p class="text-xs text-slate-400 leading-relaxed">Tu ne vas quasiment jamais configurer Next.js manuellement. Tu demandes à Claude Code de créer une page, et il s'en charge. Ce que tu dois retenir : ton projet Next.js a un dossier <code class="text-xs bg-white/10 rounded px-1">app/</code> — chaque sous-dossier dedans correspond à une URL de ton site.</p>
         </div>
-      </div>
+              </div>
+</div>
 
     </section>
 
@@ -818,9 +842,9 @@ import Layout from '../layouts/Layout.astro';
 
       <!-- Supabase -->
       <div class="card p-7 mb-5">
-        <div class="flex items-start gap-5 mb-5">
+        <div class="accordion-toggle flex items-start gap-5 mb-5 w-full text-left cursor-pointer" onclick="toggleAccordion(this)">
           <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-700 flex items-center justify-center shrink-0 text-2xl">🗄️</div>
-          <div>
+          <div class="flex-1">
             <div class="flex flex-wrap items-center gap-2 mb-1">
               <h3 class="text-2xl font-bold">Supabase</h3>
               <span class="tag bg-emerald-500/15 text-emerald-300 border border-emerald-500/20 rounded-md px-2 py-0.5">Base de données</span>
@@ -828,7 +852,10 @@ import Layout from '../layouts/Layout.astro';
             </div>
             <p class="text-slate-500 text-sm">Le cerveau qui stocke toutes les données de ton application</p>
           </div>
+        
+          <span class="chevron text-slate-500 text-lg mt-1 shrink-0">▾</span>
         </div>
+        <div class="accordion-body">
 
         <div class="analogy-box p-4 mb-5">
           <p class="text-sm text-slate-300 leading-relaxed">
@@ -855,13 +882,14 @@ import Layout from '../layouts/Layout.astro';
           <p class="text-sm text-green-300 font-semibold mb-1">✅ En pratique</p>
           <p class="text-xs text-slate-400 leading-relaxed">Tu crées ton projet Supabase sur leur site, tu copies deux variables (URL + clé API) dans un fichier <code class="text-xs bg-white/10 rounded px-1">.env</code>, et tu dis à Claude Code : <span class="text-orange-200 italic">"connecte mon app à Supabase"</span>. Il fait le reste.</p>
         </div>
-      </div>
+              </div>
+</div>
 
       <!-- Clerk -->
       <div class="card p-7">
-        <div class="flex items-start gap-5 mb-5">
+        <div class="accordion-toggle flex items-start gap-5 mb-5 w-full text-left cursor-pointer" onclick="toggleAccordion(this)">
           <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-slate-600 to-slate-800 flex items-center justify-center shrink-0 text-2xl border border-white/10">🔐</div>
-          <div>
+          <div class="flex-1">
             <div class="flex flex-wrap items-center gap-2 mb-1">
               <h3 class="text-2xl font-bold">Clerk</h3>
               <span class="tag bg-slate-600/40 text-slate-300 border border-slate-500/20 rounded-md px-2 py-0.5">Authentification</span>
@@ -869,7 +897,10 @@ import Layout from '../layouts/Layout.astro';
             </div>
             <p class="text-slate-500 text-sm">Tout ce qui concerne l'identité de tes utilisateurs — prêt en 10 minutes</p>
           </div>
+        
+          <span class="chevron text-slate-500 text-lg mt-1 shrink-0">▾</span>
         </div>
+        <div class="accordion-body">
 
         <div class="analogy-box p-4 mb-5">
           <p class="text-sm text-slate-300 leading-relaxed">
@@ -893,7 +924,8 @@ import Layout from '../layouts/Layout.astro';
           <p class="text-sm text-green-300 font-semibold mb-1">✅ En pratique</p>
           <p class="text-xs text-slate-400 leading-relaxed">Tu crées un compte sur <span class="text-blue-400">clerk.com</span>, tu copies tes clés API, et tu dis à Claude Code : <span class="text-orange-200 italic">"ajoute l'authentification Clerk avec connexion Google et email"</span>. Ton app aura un système de connexion complet en quelques minutes.</p>
         </div>
-      </div>
+              </div>
+</div>
     </section>
 
     <!-- ══════════════════════════════════════════
@@ -908,9 +940,9 @@ import Layout from '../layouts/Layout.astro';
       <p class="text-slate-500 mb-10">Un SaaS sans système de paiement n'est qu'un projet. Stripe te permet de passer du statut de "projet cool" à celui d'entreprise qui génère des revenus.</p>
 
       <div class="card p-7">
-        <div class="flex items-start gap-5 mb-5">
+        <div class="accordion-toggle flex items-start gap-5 mb-5 w-full text-left cursor-pointer" onclick="toggleAccordion(this)">
           <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-600 to-violet-700 flex items-center justify-center shrink-0 text-2xl">💳</div>
-          <div>
+          <div class="flex-1">
             <div class="flex flex-wrap items-center gap-2 mb-1">
               <h3 class="text-2xl font-bold">Stripe</h3>
               <span class="tag bg-indigo-500/15 text-indigo-300 border border-indigo-500/20 rounded-md px-2 py-0.5">Paiements</span>
@@ -918,7 +950,10 @@ import Layout from '../layouts/Layout.astro';
             </div>
             <p class="text-slate-500 text-sm">Le standard mondial des paiements en ligne pour les développeurs</p>
           </div>
+        
+          <span class="chevron text-slate-500 text-lg mt-1 shrink-0">▾</span>
         </div>
+        <div class="accordion-body">
 
         <div class="analogy-box p-4 mb-5">
           <p class="text-sm text-slate-300 leading-relaxed">
@@ -949,7 +984,8 @@ import Layout from '../layouts/Layout.astro';
           <p class="text-sm text-green-300 font-semibold mb-1">✅ En pratique</p>
           <p class="text-xs text-slate-400 leading-relaxed">Stripe prend <strong class="text-white">2.9% + 0.30€</strong> par transaction. Pas de frais mensuels tant que tu ne gagnes rien. Tu crées ton compte sur <span class="text-blue-400">stripe.com</span>, puis demande à Claude Code : <span class="text-orange-200 italic">"crée un abonnement Stripe avec les plans gratuit et pro à 19€/mois"</span>.</p>
         </div>
-      </div>
+              </div>
+</div>
     </section>
 
     <!-- ══════════════════════════════════════════
