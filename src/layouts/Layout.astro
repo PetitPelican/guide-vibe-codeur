@@ -1,0 +1,62 @@
+---
+import '../styles/global.css';
+---
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guide du Vibe Codeur</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body class="gradient-bg min-h-screen text-white">
+
+  <div class="hero-glow fixed inset-0 pointer-events-none"></div>
+
+  <slot />
+
+  <script is:inline>
+    function toggleAccordion(toggle) {
+      const body = toggle.nextElementSibling;
+      if (!body || !body.classList.contains('accordion-body')) return;
+      const isCollapsed = body.classList.contains('collapsed');
+      body.classList.toggle('collapsed', !isCollapsed);
+      toggle.classList.toggle('collapsed', !isCollapsed);
+    }
+
+    // Sommaire flottant — suivi du scroll
+    (function () {
+      const ids = ['nav-demarrer','nav-vscode','nav-github','nav-frontend','nav-backend','nav-stripe','nav-services','nav-recap','nav-pratiques','nav-securite'];
+      const items = {};
+      ids.forEach(function(id) {
+        items[id] = document.querySelector('[data-target="' + id + '"]');
+      });
+
+      function setActive(id) {
+        Object.values(items).forEach(function(a) { if (a) a.classList.remove('active'); });
+        if (items[id]) items[id].classList.add('active');
+      }
+
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) { if (e.isIntersecting) setActive(e.target.id); });
+      }, { rootMargin: '-15% 0px -65% 0px' });
+
+      ids.forEach(function(id) {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
+      });
+
+      const sideNav = document.getElementById('side-nav');
+      const header = document.querySelector('header');
+      if (sideNav && header) {
+        const navObserver = new IntersectionObserver(function(entries) {
+          if (entries[0]) sideNav.style.opacity = entries[0].isIntersecting ? '0' : '1';
+        }, { threshold: 0.1 });
+        navObserver.observe(header);
+      }
+    })();
+  </script>
+
+</body>
+</html>

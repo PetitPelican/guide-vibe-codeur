@@ -1,0 +1,32 @@
+{
+  "name": "guide-du-vibe-codeur",
+  "version": "1.0.0",
+  "description": "> Template Claude Code prêt à l'emploi pour démarrer n'importe quel projet en 2 minutes.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PetitPelican/guide-vibe-codeur.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/PetitPelican/guide-vibe-codeur/issues"
+  },
+  "homepage": "https://github.com/PetitPelican/guide-vibe-codeur#readme",
+  "dependencies": {
+    "@astrojs/tailwind": "^6.0.2",
+    "astro": "^6.4.8",
+    "tailwindcss": "^3.4.19"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.15"
+  }
+}

@@ -1,119 +1,7 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Guide du Vibe Codeur</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-  <style>
-    * { font-family: 'Inter', sans-serif; }
-    code, .mono { font-family: 'JetBrains Mono', monospace; }
-    html, body { max-width: 100%; overflow-x: hidden; }
-
-    .gradient-bg {
-      background: linear-gradient(160deg, #0a0a14 0%, #10082a 45%, #080e1c 100%);
-    }
-    .hero-glow {
-      background: radial-gradient(ellipse 90% 50% at 50% -5%, rgba(139,92,246,0.2) 0%, transparent 65%);
-    }
-    .card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 20px;
-      transition: border-color 0.3s, transform 0.2s, box-shadow 0.3s;
-    }
-    .card:hover {
-      border-color: rgba(139,92,246,0.3);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 40px rgba(139,92,246,0.1);
-    }
-    .analogy-box {
-      background: rgba(139,92,246,0.07);
-      border: 1px solid rgba(139,92,246,0.2);
-      border-radius: 12px;
-    }
-    .code-box {
-      background: rgba(0,0,0,0.4);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 10px;
-      overflow-x: auto;
-      word-break: break-all;
-      overflow-wrap: break-word;
-    }
-    /* En mode découverte, on cache les code-box et les grilles de détails */
-    .tip-box {
-      background: rgba(34,197,94,0.06);
-      border: 1px solid rgba(34,197,94,0.2);
-      border-radius: 12px;
-    }
-    .section-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-    }
-    .badge {
-      font-size: 0.65rem;
-      letter-spacing: 0.08em;
-    }
-    .tag {
-      font-size: 0.68rem;
-      font-family: 'JetBrains Mono', monospace;
-    }
-    .pulse-dot { animation: pulseDot 2s infinite; }
-    @keyframes pulseDot {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
-    }
-    .step-connector {
-      position: relative;
-    }
-    .step-connector:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      left: 19px;
-      top: 44px;
-      height: calc(100% + 24px);
-      width: 2px;
-      background: linear-gradient(to bottom, rgba(139,92,246,0.4), rgba(139,92,246,0.05));
-    }
-    .highlight {
-      background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(59,130,246,0.1));
-      border: 1px solid rgba(139,92,246,0.2);
-      border-radius: 12px;
-    }
-    .emoji-icon {
-      font-size: 1.4rem;
-      line-height: 1;
-    }
-    .badge-start   { background: rgba(34,197,94,0.12); color: #86efac; border: 1px solid rgba(34,197,94,0.25); }
-    .badge-inter   { background: rgba(251,146,60,0.12); color: #fdba74; border: 1px solid rgba(251,146,60,0.25); }
-    .badge-prod    { background: rgba(239,68,68,0.10);  color: #fca5a5; border: 1px solid rgba(239,68,68,0.2); }
-    .maturity-badge { font-size: 0.6rem; letter-spacing: 0.08em; font-family: 'JetBrains Mono', monospace; border-radius: 6px; padding: 2px 7px; font-weight: 600; text-transform: uppercase; }
-
-    /* Accordéon */
-    .accordion-body { overflow: hidden; transition: max-height 0.35s ease, opacity 0.3s ease; max-height: 9999px; opacity: 1; }
-    #side-nav { opacity: 0; transition: opacity 0.4s ease; }
-    .side-nav-item { text-decoration: none; }
-    .side-nav-item .side-nav-dot { background: #334155; }
-    .side-nav-item .side-nav-text { color: #64748b; }
-    .side-nav-item:hover .side-nav-text { color: #94a3b8; }
-    .side-nav-item:hover .side-nav-dot { background: #6366f1; }
-    .side-nav-item.active { background: rgba(139,92,246,0.08); }
-    .side-nav-item.active .side-nav-dot { background: #a78bfa; width: 6px; height: 6px; }
-    .side-nav-item.active .side-nav-text { color: #e2e8f0; font-weight: 600; }
-    .accordion-body.collapsed { max-height: 0; opacity: 0; }
-    .accordion-toggle { cursor: pointer; user-select: none; }
-    .accordion-toggle .chevron { transition: transform 0.3s ease; display: inline-block; }
-    .accordion-toggle.collapsed .chevron { transform: rotate(-90deg); }
-
-    /* Modes de lecture */
-  </style>
-</head>
-<body class="gradient-bg min-h-screen text-white">
-
-  <div class="hero-glow fixed inset-0 pointer-events-none"></div>
-
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout>
   <div class="relative max-w-4xl mx-auto px-5 py-16">
 
     <!-- ══════════════════════════════════════════
@@ -1822,10 +1710,10 @@
         <div class="code-box p-4">
           <p class="text-xs text-slate-500 mb-2">Exemple de .mcp.json.example à partager (valeurs vides) :</p>
           <div class="text-xs space-y-0.5">
-            <div class="text-slate-400">{"mcpServers": {"supabase": {"command": "npx",</div>
+            <div class="text-slate-400">&#123;"mcpServers": &#123;"supabase": &#123;"command": "npx",</div>
             <div class="text-slate-400">&nbsp;&nbsp;"args": ["@supabase/mcp-server-supabase"],</div>
-            <div class="text-green-300">&nbsp;&nbsp;"env": {"SUPABASE_URL": "TON_URL_ICI",</div>
-            <div class="text-green-300">&nbsp;&nbsp;&nbsp;&nbsp;"SUPABASE_SERVICE_ROLE_KEY": "TA_CLE_ICI"}}}}</div>
+            <div class="text-green-300">&nbsp;&nbsp;"env": &#123;"SUPABASE_URL": "TON_URL_ICI",</div>
+            <div class="text-green-300">&nbsp;&nbsp;&nbsp;&nbsp;"SUPABASE_SERVICE_ROLE_KEY": "TA_CLE_ICI"&#125;&#125;&#125;&#125;</div>
           </div>
         </div>
         </div><!-- /accordion-body -->
@@ -1944,47 +1832,4 @@
     </footer>
 
   </div>
-
-  <script>
-    function toggleAccordion(toggle) {
-      const body = toggle.nextElementSibling;
-      if (!body || !body.classList.contains('accordion-body')) return;
-      const isCollapsed = body.classList.contains('collapsed');
-      body.classList.toggle('collapsed', !isCollapsed);
-      toggle.classList.toggle('collapsed', !isCollapsed);
-    }
-
-    // Sommaire flottant — suivi du scroll
-    (function () {
-      const ids = ['nav-demarrer','nav-vscode','nav-github','nav-frontend','nav-backend','nav-stripe','nav-services','nav-recap','nav-pratiques','nav-securite'];
-      const items = {};
-      ids.forEach(id => {
-        items[id] = document.querySelector(`[data-target="${id}"]`);
-      });
-
-      function setActive(id) {
-        Object.values(items).forEach(a => a && a.classList.remove('active'));
-        if (items[id]) items[id].classList.add('active');
-      }
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id); });
-      }, { rootMargin: '-15% 0px -65% 0px' });
-
-      ids.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) observer.observe(el);
-      });
-
-      const sideNav = document.getElementById('side-nav');
-      const header = document.querySelector('header');
-      const navObserver = new IntersectionObserver(([e]) => {
-        sideNav.style.opacity = e.isIntersecting ? '0' : '1';
-      }, { threshold: 0.1 });
-      if (header) navObserver.observe(header);
-    })();
-
-  </script>
-
-</body>
-</html>
+</Layout>
